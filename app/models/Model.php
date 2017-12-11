@@ -33,6 +33,11 @@ abstract class Model extends \Phalcon\Mvc\Model
         // $this->useDynamicUpdate(true);
     }
 
+    public static function getInstance($config = [])
+    {
+
+    }
+
     /**
      * @desc   只修改某些字段的更新方法
      * @author limx

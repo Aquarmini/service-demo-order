@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | App.php [ WE CAN DO IT JUST THINK IT ]
+// | ErrorCode.php [ WE CAN DO IT JUST THINK IT ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016-2017 limingxinleo All rights reserved.
 // +----------------------------------------------------------------------
@@ -8,7 +8,17 @@
 // +----------------------------------------------------------------------
 namespace App\Common\Enums;
 
-class App
+use Xin\Phalcon\Enum\Enum;
+
+class ErrorCode extends Enum
 {
-    const DB_ORDER_SUFFIX = '_%d';
+    /**
+     * @Message('系统错误')
+     */
+    public static $ENUM_SYSTEM_ERROR = 400;
+
+    /**
+     * @Message('DB服务初始化失败')
+     */
+    public static $ENUM_SERVICE_DB_INIT_ERROR = 401;
 }

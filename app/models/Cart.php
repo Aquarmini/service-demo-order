@@ -54,7 +54,6 @@ class Cart extends Model
      */
     public function initialize()
     {
-        $this->setSchema("order_0");
         $this->setSource("cart");
     }
 

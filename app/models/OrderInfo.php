@@ -32,7 +32,6 @@ class OrderInfo extends Model
      */
     public function initialize()
     {
-        $this->setSchema("order_0");
         $this->setSource("order_info");
     }
 
