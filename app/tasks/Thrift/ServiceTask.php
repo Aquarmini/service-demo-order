@@ -5,6 +5,7 @@ namespace App\Tasks\Thrift;
 use App\Core\Cli\Task\Socket;
 use App\Thrift\Clients\RegisterClient;
 use App\Thrift\Services\AppHandler;
+use App\Thrift\Services\OrderHandler;
 use App\Utils\Redis;
 use App\Utils\Register\Sign;
 use Phalcon\Logger\AdapterInterface;
@@ -16,6 +17,7 @@ use swoole_server;
 use Thrift\Protocol\TBinaryProtocol;
 use Thrift\TMultiplexedProcessor;
 use Thrift\Transport\TMemoryBuffer;
+use Xin\Thrift\Order\OrderProcessor;
 use Xin\Thrift\Register\ServiceInfo;
 use swoole_process;
 
@@ -30,7 +32,7 @@ class ServiceTask extends Socket
         'max_request' => 500, // 每个worker进程最大处理请求次数
     ];
 
-    protected $port = 10086;
+    protected $port = 52103;
 
     protected $host = '127.0.0.1';
 
@@ -118,6 +120,8 @@ class ServiceTask extends Socket
         $this->processor = new TMultiplexedProcessor();
         $handler = new AppHandler();
         $this->processor->registerProcessor('app', new AppProcessor($handler));
+        $handler = new OrderHandler();
+        $this->processor->registerProcessor('order', new OrderProcessor($handler));
     }
 
     public function receive(swoole_server $server, $fd, $reactor_id, $data)

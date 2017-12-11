@@ -80,6 +80,61 @@ class OrderClient implements \Xin\Thrift\Order\OrderIf {
     throw new \Exception("version failed: unknown result");
   }
 
+  public function addGoodsToCart($userId, $goodsId)
+  {
+    $this->send_addGoodsToCart($userId, $goodsId);
+    return $this->recv_addGoodsToCart();
+  }
+
+  public function send_addGoodsToCart($userId, $goodsId)
+  {
+    $args = new \Xin\Thrift\Order\Order_addGoodsToCart_args();
+    $args->userId = $userId;
+    $args->goodsId = $goodsId;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'addGoodsToCart', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('addGoodsToCart', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_addGoodsToCart()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Xin\Thrift\Order\Order_addGoodsToCart_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Xin\Thrift\Order\Order_addGoodsToCart_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->ex !== null) {
+      throw $result->ex;
+    }
+    throw new \Exception("addGoodsToCart failed: unknown result");
+  }
+
 }
 
 

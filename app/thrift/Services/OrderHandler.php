@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace App\Thrift\Services;
 
+use App\Biz\CartService\Cart;
 use Xin\Thrift\Order\OrderIf;
 use Xin\Thrift\Order\ThriftException;
 
@@ -23,4 +24,11 @@ class OrderHandler extends Handler implements OrderIf
     {
         return $this->config->version;
     }
+
+
+    public function addGoodsToCart($userId, $goodsId)
+    {
+        return Cart::getInstance()->add($userId, $goodsId);
+    }
+
 }
