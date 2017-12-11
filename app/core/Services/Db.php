@@ -13,46 +13,48 @@ use Phalcon\DI\FactoryDefault;
 use Phalcon\Config;
 use Phalcon\Events\Manager as EventsManager;
 use App\Core\Event\DbListener;
+use App\Common\Enums\App;
 use PDO;
 
 class Db implements ServiceProviderInterface
 {
     public function register(FactoryDefault $di, Config $config)
     {
-        /**
-         * Database connection is created based in the parameters defined in the configuration file
-         */
-        $di->setShared('db', function () use ($config) {
-            $db = new DbAdapter(
-                [
-                    'host' => $config->database->host,
-                    'port' => $config->database->port,
-                    'username' => $config->database->username,
-                    'password' => $config->database->password,
-                    'dbname' => $config->database->dbname,
-                    'charset' => $config->database->charset,
-                    'options' => [
-                        PDO::ATTR_CASE => PDO::CASE_NATURAL,
-                        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                        PDO::ATTR_ORACLE_NULLS => PDO::NULL_NATURAL,
-                        PDO::ATTR_STRINGIFY_FETCHES => false,
-                        PDO::ATTR_EMULATE_PREPARES => false,
-                    ],
-                ]
-            );
-            if ($config->log->db) {
-                $eventsManager = new EventsManager();
-                // 创建一个数据库侦听
-                $dbListener = new DbListener();
-                // 侦听全部数据库事件
-                $eventsManager->attach(
-                    "db",
-                    $dbListener
+        for ($i = 0; $i < 10; $i++) {
+            $service = sprintf(App::SERVICE_DB_SUFFIX, $i);
+            $suffix = sprintf(App::DB_ORDER_SUFFIX, $i);
+            $di->setShared($service, function () use ($config, $suffix) {
+                $db = new DbAdapter(
+                    [
+                        'host' => $config->database->host,
+                        'port' => $config->database->port,
+                        'username' => $config->database->username,
+                        'password' => $config->database->password,
+                        'dbname' => $config->database->dbname . $suffix,
+                        'charset' => $config->database->charset,
+                        'options' => [
+                            PDO::ATTR_CASE => PDO::CASE_NATURAL,
+                            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                            PDO::ATTR_ORACLE_NULLS => PDO::NULL_NATURAL,
+                            PDO::ATTR_STRINGIFY_FETCHES => false,
+                            PDO::ATTR_EMULATE_PREPARES => false,
+                        ],
+                    ]
                 );
-                $db->setEventsManager($eventsManager);
-            }
-            return $db;
-        });
+                if ($config->log->db) {
+                    $eventsManager = new EventsManager();
+                    // 创建一个数据库侦听
+                    $dbListener = new DbListener();
+                    // 侦听全部数据库事件
+                    $eventsManager->attach(
+                        "db",
+                        $dbListener
+                    );
+                    $db->setEventsManager($eventsManager);
+                }
+                return $db;
+            });
+        }
     }
 
 }
