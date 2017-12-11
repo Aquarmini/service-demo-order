@@ -7,9 +7,9 @@ class OrderInfo extends Model
 
     /**
      *
-     * @var string
+     * @var integer
      * @Primary
-     * @Column(type="string", length=32, nullable=false)
+     * @Column(type="integer", length=20, nullable=false)
      */
     public $id;
 

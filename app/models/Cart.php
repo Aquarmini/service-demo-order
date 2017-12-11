@@ -24,7 +24,7 @@ class Cart extends Model
     /**
      *
      * @var integer
-     * @Column(type="integer", length=20, nullable=false)
+     * @Column(type="integer", length=20, nullable=true)
      */
     public $order_id;
 
