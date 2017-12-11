@@ -8,6 +8,9 @@
 // +----------------------------------------------------------------------
 namespace App\Models;
 
+use App\Common\CodeException;
+use App\Common\Enums\ErrorCode;
+use App\Common\Validator\Database\ConfigValidator;
 use Xin\Phalcon\Logger\Sys as LogSys;
 
 /**
@@ -35,7 +38,16 @@ abstract class Model extends \Phalcon\Mvc\Model
 
     public static function getInstance($config = [])
     {
+        $validator = new ConfigValidator();
+        if ($validator->validate($config)->valid()) {
+            throw new CodeException(ErrorCode::$ENUM_SERVICE_DB_INIT_ERROR, $validator->getErrorMessage());
+        }
 
+        if (isset($config['id']) && $id = $config['id']) {
+            $model = new static();
+            $model->setSchema();
+        }
+        $user_id = $config['user_id'];
     }
 
     /**

@@ -23,8 +23,8 @@ class Cart extends Model
 
     /**
      *
-     * @var string
-     * @Column(type="string", length=32, nullable=true)
+     * @var integer
+     * @Column(type="integer", length=20, nullable=false)
      */
     public $order_id;
 
@@ -58,16 +58,6 @@ class Cart extends Model
     }
 
     /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return 'cart';
-    }
-
-    /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
@@ -87,6 +77,16 @@ class Cart extends Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'cart';
     }
 
 }

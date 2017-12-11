@@ -2,6 +2,7 @@
 
 namespace App\Tasks;
 
+use App\Common\Validator\Database\ConfigValidator;
 use App\Models\Order;
 
 class TestTask extends Task
@@ -9,8 +10,7 @@ class TestTask extends Task
 
     public function mainAction()
     {
-        $res = Order::find()->toArray();
-        dd($res);
+        dd(get_order_id(88888));
     }
 
 }

@@ -7,9 +7,9 @@ class Order extends Model
 
     /**
      *
-     * @var string
+     * @var integer
      * @Primary
-     * @Column(type="string", length=32, nullable=false)
+     * @Column(type="integer", length=20, nullable=false)
      */
     public $id;
 
@@ -57,16 +57,6 @@ class Order extends Model
     }
 
     /**
-     * Returns table name mapped in the model.
-     *
-     * @return string
-     */
-    public function getSource()
-    {
-        return 'order';
-    }
-
-    /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
@@ -86,6 +76,16 @@ class Order extends Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    /**
+     * Returns table name mapped in the model.
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return 'order';
     }
 
 }
