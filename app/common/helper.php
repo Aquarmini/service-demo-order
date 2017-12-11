@@ -7,6 +7,7 @@
 // | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
 // +----------------------------------------------------------------------
 use App\Common\OrderClient;
+use App\Common\Enums\App as AppEnum;
 
 if (!function_exists('get_schema')) {
     /**
@@ -16,9 +17,14 @@ if (!function_exists('get_schema')) {
      * @param $userId
      * @return mixed
      */
-    function get_schema($id, $userId)
+    function get_schema($id = null, $userId = null)
     {
-
+        if (isset($id)) {
+            $num = str_pad(decbin($id), 64, '0', STR_PAD_LEFT);
+            $bit = substr($num, 42, 10); // userId 的10个bit位
+            $bit = substr($bit, -3, 3);
+            return sprintf(AppEnum::DB_ORDER_SUFFIX, bindec($bit));
+        }
     }
 }
 

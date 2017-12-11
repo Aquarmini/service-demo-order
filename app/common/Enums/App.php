@@ -10,5 +10,5 @@ namespace App\Common\Enums;
 
 class App
 {
-    const DB_ORDER_SUFFIX = '_%d';
+    const DB_ORDER_SUFFIX = 'order_%d';
 }

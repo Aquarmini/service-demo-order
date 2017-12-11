@@ -10,7 +10,10 @@ class TestTask extends Task
 
     public function mainAction()
     {
-        dd(get_order_id(88888));
+        $order_id = get_order_id(88889);
+        dump($order_id);
+        $schema = get_schema($order_id);
+        dump($schema);
     }
 
 }
