@@ -80,6 +80,7 @@ DROP TABLE IF EXISTS `order_info`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_info` (
   `id` bigint(20) unsigned NOT NULL,
+  `is_deleted` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否已删除',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -104,4 +105,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-12 11:24:36
+-- Dump completed on 2017-12-12 12:03:23
