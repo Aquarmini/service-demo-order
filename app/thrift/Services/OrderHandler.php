@@ -45,9 +45,9 @@ class OrderHandler extends Handler implements OrderIf
      * @param int $goodsId
      * @return bool
      */
-    public function delGoodsFromCart($userId, $goodsId)
+    public function delGoodsFromCart($userId, $goodsId, $id)
     {
-        $result = Cart::getInstance()->del($userId, $goodsId);
+        $result = Cart::getInstance()->del($userId, $goodsId, $id);
         return $result;
     }
 }

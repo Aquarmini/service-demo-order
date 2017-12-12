@@ -9,14 +9,21 @@
 namespace Tests\Units\Cart;
 
 use App\Thrift\Clients\OrderClient;
-use UnitTestCase;
+use Tests\Units\BaseTest;
 
-class EditTest extends UnitTestCase
+class EditTest extends BaseTest
 {
     public function testAddCartCase()
     {
         $client = OrderClient::getInstance();
-        $status = $client->addGoodsToCart(11521, 110536);
+        $status = $client->addGoodsToCart($this->userId, $this->goodsId);
+        $this->assertTrue($status);
+    }
+
+    public function testDelCartCase()
+    {
+        $client = OrderClient::getInstance();
+        $status = $client->delGoodsFromCart($this->userId, $this->goodsId);
         $this->assertTrue($status);
     }
 }

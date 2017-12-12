@@ -42,15 +42,15 @@ class Cart extends Injectable
      * @param $goodsId
      * @return bool
      */
-    public function del($userId, $goodsId)
+    public function del($userId, $goodsId, $id)
     {
         $model = CartModel::getInstance([
             'user_id' => $userId
         ]);
 
         $cart = $model->findFirst([
-            'conditions' => 'user_id = ?0 AND goods_id = ?1',
-            'bind' => [$userId, $goodsId],
+            'conditions' => 'user_id = ?0 AND goods_id = ?1 AND id = ?2',
+            'bind' => [$userId, $goodsId, $id],
         ]);
 
         if ($cart) {
