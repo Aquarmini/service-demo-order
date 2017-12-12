@@ -11,6 +11,7 @@ namespace App\Models;
 use App\Common\CodeException;
 use App\Common\Enums\ErrorCode;
 use App\Common\Validator\Database\ConfigValidator;
+use Phalcon\Mvc\Model\Behavior\SoftDelete;
 use Xin\Phalcon\Logger\Sys as LogSys;
 
 /**
@@ -19,6 +20,9 @@ use Xin\Phalcon\Logger\Sys as LogSys;
  */
 abstract class Model extends \Phalcon\Mvc\Model
 {
+    const DELETED = 1;
+
+    const NOT_DELETED = 0;
 
     /**
      * Initialize method for model.
@@ -33,7 +37,17 @@ abstract class Model extends \Phalcon\Mvc\Model
         // $this->hasManyToMany(...$params, $options = null)
 
         // Sets if a model must use dynamic update instead of the all-field update
-        // $this->useDynamicUpdate(true);
+        $this->useDynamicUpdate(true);
+
+        $this->addBehavior(
+            new SoftDelete(
+                [
+                    'field' => 'is_deleted',
+                    'value' => static::DELETED,
+                ]
+            )
+        );
+
     }
 
     public static function getInstance($config = [])
