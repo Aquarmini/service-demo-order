@@ -39,6 +39,7 @@ abstract class Model extends \Phalcon\Mvc\Model
         // Sets if a model must use dynamic update instead of the all-field update
         $this->useDynamicUpdate(true);
 
+        // 增加Soft Delete
         $this->addBehavior(
             new SoftDelete(
                 [
@@ -51,7 +52,7 @@ abstract class Model extends \Phalcon\Mvc\Model
     }
 
     /**
-     * @desc
+     * @desc   获取Model
      * @author limx
      * @param array $config
      * @return static
