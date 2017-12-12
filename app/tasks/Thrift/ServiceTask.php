@@ -17,7 +17,7 @@ use swoole_server;
 use Thrift\Protocol\TBinaryProtocol;
 use Thrift\TMultiplexedProcessor;
 use Thrift\Transport\TMemoryBuffer;
-use Xin\Thrift\Order\OrderProcessor;
+use Xin\Thrift\OrderService\OrderProcessor;
 use Xin\Thrift\Register\ServiceInfo;
 use swoole_process;
 

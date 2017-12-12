@@ -3,7 +3,7 @@
 namespace App\Thrift\Clients;
 
 use App\Thrift\Client;
-use Xin\Thrift\Order\OrderClient as OrderServiceClient;
+use Xin\Thrift\OrderService\OrderClient as OrderServiceClient;
 
 class OrderClient extends Client
 {

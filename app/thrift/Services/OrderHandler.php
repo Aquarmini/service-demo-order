@@ -9,8 +9,8 @@
 namespace App\Thrift\Services;
 
 use App\Biz\CartService\Cart;
-use Xin\Thrift\Order\OrderIf;
-use Xin\Thrift\Order\ThriftException;
+use Xin\Thrift\OrderService\OrderIf;
+use Xin\Thrift\OrderService\ThriftException;
 
 class OrderHandler extends Handler implements OrderIf
 {

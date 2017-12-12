@@ -20,10 +20,10 @@ class EditTest extends BaseTest
         $this->assertTrue($status);
     }
 
-    public function testDelCartCase()
-    {
-        $client = OrderClient::getInstance();
-        $status = $client->delGoodsFromCart($this->userId, $this->goodsId);
-        $this->assertTrue($status);
-    }
+    // public function testDelCartCase()
+    // {
+    //     $client = OrderClient::getInstance();
+    //     $status = $client->delGoodsFromCart($this->userId, $this->goodsId);
+    //     $this->assertTrue($status);
+    // }
 }
