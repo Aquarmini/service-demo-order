@@ -105,4 +105,35 @@ class OrderProcessor {
       $output->getTransport()->flush();
     }
   }
+  protected function process_delGoodsFromCart($seqid, $input, $output) {
+    $bin_accel = ($input instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary_after_message_begin');
+    if ($bin_accel)
+    {
+      $args = thrift_protocol_read_binary_after_message_begin($input, '\Xin\Thrift\Order\Order_delGoodsFromCart_args', $input->isStrictRead());
+    }
+    else
+    {
+      $args = new \Xin\Thrift\Order\Order_delGoodsFromCart_args();
+      $args->read($input);
+      $input->readMessageEnd();
+    }
+    $result = new \Xin\Thrift\Order\Order_delGoodsFromCart_result();
+    try {
+      $result->success = $this->handler_->delGoodsFromCart($args->userId, $args->goodsId);
+    } catch (\Xin\Thrift\Order\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'delGoodsFromCart', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('delGoodsFromCart', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
 }

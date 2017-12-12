@@ -9,7 +9,6 @@
 namespace App\Biz\CartService;
 
 use Phalcon\Di\Injectable;
-use Xin\Thrift\Order\ThriftException;
 use Xin\Traits\Common\InstanceTrait;
 use App\Models\Cart as CartModel;
 
@@ -34,5 +33,30 @@ class Cart extends Injectable
         $cart->goods_id = $goodsId;
 
         return $cart->save();
+    }
+
+    /**
+     * @desc   从购物车中删除商品
+     * @author limx
+     * @param $userId
+     * @param $goodsId
+     * @return bool
+     */
+    public function del($userId, $goodsId)
+    {
+        $model = CartModel::getInstance([
+            'user_id' => $userId
+        ]);
+
+        $cart = $model->findFirst([
+            'conditions' => 'user_id = ?0 AND goods_id = ?1',
+            'bind' => [$userId, $goodsId],
+        ]);
+
+        if ($cart) {
+            return $cart->delete();
+        }
+
+        return false;
     }
 }

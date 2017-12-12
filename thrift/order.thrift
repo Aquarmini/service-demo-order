@@ -11,5 +11,8 @@ service Order {
     string version() throws (1:ThriftException ex)
 
     // 添加购物车
-    bool addGoodsToCart(1:i64 userId,2:i64 goodsId) throws (1:ThriftException ex)
+    bool addGoodsToCart(1:i64 userId, 2:i64 goodsId) throws (1:ThriftException ex)
+
+    // 删除购物车中的商品
+    bool delGoodsFromCart(1:i64 userId, 2:i64 goodsId) throws (1:ThriftException ex)
 }

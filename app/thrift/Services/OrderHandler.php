@@ -25,10 +25,29 @@ class OrderHandler extends Handler implements OrderIf
         return $this->config->version;
     }
 
-
+    /**
+     * @desc   添加购物车
+     * @author limx
+     * @param int $userId  用户ID
+     * @param int $goodsId 商品ID
+     * @return bool
+     */
     public function addGoodsToCart($userId, $goodsId)
     {
-        return Cart::getInstance()->add($userId, $goodsId);
+        $result = Cart::getInstance()->add($userId, $goodsId);
+        return $result;
     }
 
+    /**
+     * @desc   从购物车中删除商品
+     * @author limx
+     * @param int $userId
+     * @param int $goodsId
+     * @return bool
+     */
+    public function delGoodsFromCart($userId, $goodsId)
+    {
+        $result = Cart::getInstance()->del($userId, $goodsId);
+        return $result;
+    }
 }

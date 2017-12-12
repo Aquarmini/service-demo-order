@@ -29,6 +29,13 @@ interface OrderIf {
    * @throws \Xin\Thrift\Order\ThriftException
    */
   public function addGoodsToCart($userId, $goodsId);
+  /**
+   * @param int $userId
+   * @param int $goodsId
+   * @return bool
+   * @throws \Xin\Thrift\Order\ThriftException
+   */
+  public function delGoodsFromCart($userId, $goodsId);
 }
 
 
