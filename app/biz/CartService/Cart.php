@@ -9,7 +9,9 @@
 namespace App\Biz\CartService;
 
 use Phalcon\Di\Injectable;
+use Xin\Thrift\Order\ThriftException;
 use Xin\Traits\Common\InstanceTrait;
+use App\Models\Cart as CartModel;
 
 class Cart extends Injectable
 {
@@ -24,6 +26,13 @@ class Cart extends Injectable
      */
     public function add($userId, $goodsId)
     {
-        return true;
+        $cart = CartModel::getInstance([
+            'user_id' => $userId
+        ]);
+
+        $cart->user_id = $userId;
+        $cart->goods_id = $goodsId;
+
+        return $cart->save();
     }
 }

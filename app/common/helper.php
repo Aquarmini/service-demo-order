@@ -25,6 +25,10 @@ if (!function_exists('get_schema')) {
             $bit = substr($bit, -3, 3);
             return sprintf(AppEnum::DB_ORDER_SUFFIX, bindec($bit));
         }
+
+        $bit = decbin($userId);
+        $bit = substr($bit, -3, 3);
+        return sprintf(AppEnum::DB_ORDER_SUFFIX, bindec($bit));
     }
 }
 

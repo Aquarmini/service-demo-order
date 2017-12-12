@@ -50,18 +50,25 @@ abstract class Model extends \Phalcon\Mvc\Model
 
     }
 
+    /**
+     * @desc
+     * @author limx
+     * @param array $config
+     * @return static
+     * @throws CodeException
+     */
     public static function getInstance($config = [])
     {
         $validator = new ConfigValidator();
         if ($validator->validate($config)->valid()) {
             throw new CodeException(ErrorCode::$ENUM_SERVICE_DB_INIT_ERROR, $validator->getErrorMessage());
         }
-
-        if (isset($config['id']) && $id = $config['id']) {
-            $model = new static();
-            $model->setSchema();
-        }
-        $user_id = $config['user_id'];
+        $model = new static();
+        $id = $validator->getValue('id');
+        $user_id = $validator->getValue('user_id');
+        $schema = get_schema($id, $user_id);
+        $model->setSchema($schema);
+        return $model;
     }
 
     /**
