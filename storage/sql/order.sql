@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.20, for osx10.12 (x86_64)
 --
--- Host: 127.0.0.1    Database: order_0
+-- Host: 127.0.0.1    Database: order_4
 -- ------------------------------------------------------
 -- Server version	5.7.20
 
@@ -30,7 +30,8 @@ CREATE TABLE `cart` (
   `is_deleted` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否被删除',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `USER_INDEX` (`user_id`,`is_deleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -58,7 +59,8 @@ CREATE TABLE `order` (
   `is_deleted` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否被删除',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `USER_INDEX` (`user_id`,`is_deleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -105,4 +107,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-12-12 12:03:23
+-- Dump completed on 2017-12-12 12:07:53
