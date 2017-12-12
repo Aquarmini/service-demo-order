@@ -31,6 +31,14 @@ interface OrderIf {
   public function addGoodsToCart($userId, $goodsId);
   /**
    * @param int $userId
+   * @param int $pageSize
+   * @param int $lastQueryId
+   * @return \Xin\Thrift\OrderService\Order\CartList
+   * @throws \Xin\Thrift\OrderService\ThriftException
+   */
+  public function listCartsByUserId($userId, $pageSize, $lastQueryId);
+  /**
+   * @param int $userId
    * @param int $goodsId
    * @param int $id
    * @return bool

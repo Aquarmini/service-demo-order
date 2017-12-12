@@ -9,8 +9,10 @@
 namespace App\Thrift\Services;
 
 use App\Biz\CartService\Cart;
+use Xin\Thrift\OrderService\Order\CartList;
 use Xin\Thrift\OrderService\OrderIf;
 use Xin\Thrift\OrderService\ThriftException;
+use Xin\Thrift\OrderService\Order\Cart as CartDTO;
 
 class OrderHandler extends Handler implements OrderIf
 {
@@ -37,6 +39,34 @@ class OrderHandler extends Handler implements OrderIf
         $result = Cart::getInstance()->add($userId, $goodsId);
         return $result;
     }
+
+    /**
+     * @desc   获取用户购物车列表
+     * @author limx
+     * @param int $userId
+     * @param int $lastQueryId
+     * @param int $pageSize
+     * @return CartList
+     */
+    public function listCartsByUserId($userId, $pageSize, $lastQueryId)
+    {
+        $carts = Cart::getInstance()->listByUserId($userId, $pageSize, $lastQueryId);
+        $items = [];
+        foreach ($carts as $cart) {
+            $item = new CartDTO([
+                'id' => $cart->id,
+                'userId' => $cart->user_id,
+                'orderId' => $cart->order_id,
+                'goodsId' => $cart->goods_id,
+                'isDeleted' => $cart->is_deleted,
+            ]);
+            $items[] = $item;
+        }
+        return new CartList([
+            'items' => $items
+        ]);
+    }
+
 
     /**
      * @desc   从购物车中删除商品

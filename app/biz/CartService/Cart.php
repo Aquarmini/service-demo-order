@@ -8,6 +8,7 @@
 // +----------------------------------------------------------------------
 namespace App\Biz\CartService;
 
+use App\Models\Model;
 use Phalcon\Di\Injectable;
 use Xin\Traits\Common\InstanceTrait;
 use App\Models\Cart as CartModel;
@@ -33,6 +34,33 @@ class Cart extends Injectable
         $cart->goods_id = $goodsId;
 
         return $cart->save();
+    }
+
+    /**
+     * @desc   返回用户的购物车列表
+     * @author limx
+     * @param $userId      用户ID
+     * @param $lastQueryId 上次最后的查询ID
+     * @param $pageSize    分页大小
+     * @return CartModel|CartModel[]|\Phalcon\Mvc\Model\ResultSetInterface
+     */
+    public function listByUserId($userId, $pageSize, $lastQueryId = null)
+    {
+        $cart = CartModel::getInstance([
+            'user_id' => $userId
+        ]);
+        $condition = 'user_id = ?0 AND is_deleted = ?1';
+        $bind = [$userId, Model::NOT_DELETED];
+        if (isset($lastQueryId)) {
+            $condition .= ' AND id < ?2';
+            $bind[] = $lastQueryId;
+        }
+        return $cart->find([
+            'conditions' => $condition,
+            'bind' => $bind,
+            'limit' => $pageSize,
+            'order' => 'id DESC'
+        ]);
     }
 
     /**
