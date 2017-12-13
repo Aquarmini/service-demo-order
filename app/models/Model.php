@@ -12,6 +12,7 @@ use App\Common\CodeException;
 use App\Common\Enums\ErrorCode;
 use App\Common\Validator\Database\ConfigValidator;
 use Phalcon\Mvc\Model\Behavior\SoftDelete;
+use Phalcon\Text;
 use Xin\Phalcon\Logger\Sys as LogSys;
 
 /**
@@ -64,12 +65,17 @@ abstract class Model extends \Phalcon\Mvc\Model
         if ($validator->validate($config)->valid()) {
             throw new CodeException(ErrorCode::$ENUM_SERVICE_DB_INIT_ERROR, $validator->getErrorMessage());
         }
-        $model = new static();
         $id = $validator->getValue('id');
         $user_id = $validator->getValue('user_id');
-        $schema = get_schema($id, $user_id);
-        $model->setSchema($schema);
-        return $model;
+        $schema_id = get_schema_id($id, $user_id);
+        $className = 'Model' . $schema_id;
+        $class = sprintf("%s\\%s", get_called_class(), $className);
+        return new $class;
+    }
+
+    public function getSchema()
+    {
+        throw new CodeException(ErrorCode::$ENUM_MODEL_SCHEMA_MUST_REWRITE);
     }
 
     /**

@@ -21,4 +21,9 @@ class ErrorCode extends Enum
      * @Message('DB服务初始化失败')
      */
     public static $ENUM_SERVICE_DB_INIT_ERROR = 401;
+
+    /**
+     * @Message('模型的getSchema方法必须被重写')
+     */
+    public static $ENUM_MODEL_SCHEMA_MUST_REWRITE = 402;
 }
