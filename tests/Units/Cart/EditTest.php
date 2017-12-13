@@ -8,6 +8,8 @@
 // +----------------------------------------------------------------------
 namespace Tests\Units\Cart;
 
+use App\Models\Cart;
+use App\Models\Model;
 use App\Thrift\Clients\OrderClient;
 use Tests\Units\BaseTest;
 
@@ -38,6 +40,16 @@ class EditTest extends BaseTest
             $id = $result->items[0]->id;
             $status = $client->delGoodsFromCart($this->userId, $this->goodsId, $id);
             $this->assertTrue($status);
+
+            $model = Cart::getInstance([
+                'user_id' => $this->userId
+            ]);
+            $delCart = $model->findFirst($id);
+            if ($delCart) {
+                $this->assertEquals(Model::DELETED, $delCart->is_deleted);
+            } else {
+                $this->assertTrue(false);
+            }
         }
     }
 }

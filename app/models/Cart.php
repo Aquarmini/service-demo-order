@@ -62,6 +62,7 @@ class Cart extends Model
     public function initialize()
     {
         $this->setSource("cart");
+        parent::initialize();
     }
 
     /**

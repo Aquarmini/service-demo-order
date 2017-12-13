@@ -61,6 +61,7 @@ class Order extends Model
     public function initialize()
     {
         $this->setSource("order");
+        parent::initialize();
     }
 
     /**

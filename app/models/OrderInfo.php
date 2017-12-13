@@ -40,6 +40,7 @@ class OrderInfo extends Model
     public function initialize()
     {
         $this->setSource("order_info");
+        parent::initialize();
     }
 
     /**
