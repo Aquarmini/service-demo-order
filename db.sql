@@ -37,7 +37,7 @@ CREATE TABLE `cart` (
   KEY `USER_GOODS_INDEX` (`user_id`,`goods_id`,`is_deleted`),
   KEY `USER_ORDER_INDEX` (`user_id`,`order_id`,`is_deleted`),
   KEY `USER_SHOP_INDEX` (`user_id`,`shop_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

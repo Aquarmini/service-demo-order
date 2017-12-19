@@ -8,8 +8,10 @@
 // +----------------------------------------------------------------------
 namespace App\Biz\OrderService;
 
+use App\Common\CodeException;
 use App\Common\Enums\ErrorCode;
 use App\Models\Model;
+use App\Utils\DB;
 use App\Utils\Log;
 use Phalcon\Di\Injectable;
 use Xin\Thrift\MicroService\ThriftException;
@@ -34,7 +36,9 @@ class Order extends Injectable
         $cartModel = CartModel::getInstance([
             'user_id' => $userId
         ]);
+        /** @var CartModel[] $carts */
         $carts = [];
+        $totalFee = 0;
         foreach ($cartIds as $cartId) {
             $cart = $cartModel->findFirst($cartId);
             if ($cart->user_id !== $userId) {
@@ -44,15 +48,37 @@ class Order extends Injectable
                 ]);
             }
             $carts[] = $cart;
+            $totalFee += $cart->unit_fee * $cart->num;
         }
 
-        $orderModel = OrderModel::getInstance([
-            'user_id' => $userId
-        ]);
+        DB::begin();
+        try {
+            $orderModel = OrderModel::getInstance([
+                'user_id' => $userId
+            ]);
 
-        $orderModel->id = get_order_id($userId);
-        $orderModel->user_id = $userId;
-        $orderModel->total_fee = 1;
+            $orderModel->id = get_order_id($userId);
+            $orderModel->user_id = $userId;
+            $orderModel->total_fee = $totalFee;
+            if ($orderModel->save()) {
+                // 订单保存成功 修改购物车状态
+                foreach ($carts as $cart) {
+                    $cart->order_id = $orderModel->id;
+                    if (false === $cart->save()) {
+                        $message = sprintf('%s的购物车%s订单ID修改失败', $userId, $cart->id);
+                        throw new \Exception($message);
+                    }
+                }
+            }
+            DB::commit();
+        } catch (\Exception $ex) {
+            DB::rollback();
+            throw new ThriftException([
+                'code' => ErrorCode::$ENUM_ORDER_PLACE_ERROR,
+                'message' => ErrorCode::getMessage(ErrorCode::$ENUM_ORDER_PLACE_ERROR),
+            ]);
+        }
+
         return true;
     }
 }

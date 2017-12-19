@@ -31,4 +31,9 @@ class ErrorCode extends Enum
      * @Message('订单下单报错，非法的购物车ID')
      */
     public static $ENUM_ORDER_PLACE_INVALID_CART_ID = 1001;
+
+    /**
+     * @Message('订单下单失败')
+     */
+    public static $ENUM_ORDER_PLACE_ERROR = 1002;
 }
