@@ -9,7 +9,6 @@
 namespace App\Biz\CartService;
 
 use App\Models\Model;
-use App\Models\Order;
 use App\Utils\Log;
 use Phalcon\Di\Injectable;
 use Xin\Traits\Common\InstanceTrait;
@@ -52,7 +51,7 @@ class Cart extends Injectable
             'user_id' => $userId
         ]);
         Log::info($cart->getSchema());
-        $condition = 'user_id = ?0 AND is_deleted = ?1';
+        $condition = 'user_id = ?0 AND order_id IS NULL AND is_deleted = ?1';
         $bind = [$userId, Model::NOT_DELETED];
         if (isset($lastQueryId)) {
             $condition .= ' AND id < ?2';

@@ -19,4 +19,7 @@ service Order {
 
     // 删除购物车中的商品
     bool delGoodsFromCart(1:i64 userId, 2:i64 goodsId, 3:i64 id) throws (1:ThriftException ex)
+
+    // 下单接口
+    bool place(1:i64 userId, 2:list<i64> cartIds) throws (1:ThriftException ex)
 }

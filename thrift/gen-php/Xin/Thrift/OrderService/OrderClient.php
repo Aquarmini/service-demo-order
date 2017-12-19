@@ -247,6 +247,61 @@ class OrderClient implements \Xin\Thrift\OrderService\OrderIf {
     throw new \Exception("delGoodsFromCart failed: unknown result");
   }
 
+  public function place($userId, array $cartIds)
+  {
+    $this->send_place($userId, $cartIds);
+    return $this->recv_place();
+  }
+
+  public function send_place($userId, array $cartIds)
+  {
+    $args = new \Xin\Thrift\OrderService\Order_place_args();
+    $args->userId = $userId;
+    $args->cartIds = $cartIds;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'place', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('place', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_place()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Xin\Thrift\OrderService\Order_place_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Xin\Thrift\OrderService\Order_place_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->ex !== null) {
+      throw $result->ex;
+    }
+    throw new \Exception("place failed: unknown result");
+  }
+
 }
 
 

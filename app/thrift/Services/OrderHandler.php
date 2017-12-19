@@ -9,6 +9,7 @@
 namespace App\Thrift\Services;
 
 use App\Biz\CartService\Cart;
+use App\Biz\OrderService\Order;
 use Xin\Thrift\OrderService\Order\CartList;
 use Xin\Thrift\OrderService\OrderIf;
 use Xin\Thrift\OrderService\ThriftException;
@@ -79,5 +80,17 @@ class OrderHandler extends Handler implements OrderIf
     {
         $result = Cart::getInstance()->del($userId, $goodsId, $id);
         return $result;
+    }
+
+    /**
+     * @desc   下单接口
+     * @author limx
+     * @param int   $userId
+     * @param array $cartIds
+     * @return bool
+     */
+    public function place($userId, array $cartIds)
+    {
+        return Order::getInstance()->place($userId, $cartIds);
     }
 }

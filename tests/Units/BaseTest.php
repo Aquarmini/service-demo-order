@@ -8,7 +8,7 @@
 // +----------------------------------------------------------------------
 namespace Tests\Units;
 
-use UnitTestCase;
+use Tests\UnitTestCase;
 
 abstract class BaseTest extends UnitTestCase
 {

@@ -45,6 +45,13 @@ interface OrderIf {
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
   public function delGoodsFromCart($userId, $goodsId, $id);
+  /**
+   * @param int $userId
+   * @param int[] $cartIds
+   * @return bool
+   * @throws \Xin\Thrift\OrderService\ThriftException
+   */
+  public function place($userId, array $cartIds);
 }
 
 
