@@ -12,7 +12,7 @@ service Order {
     string version() throws (1:ThriftException ex)
 
     // 添加购物车
-    bool addGoodsToCart(1:i64 userId, 2:i64 goodsId) throws (1:ThriftException ex)
+    bool addGoodsToCart(1:i64 userId, 2:i64 goodsId, 3:i64 shopId, 4:i32 num, 5:i32 unitFee) throws (1:ThriftException ex)
 
     // 获取购物车列表
     cart.CartList listCartsByUserId(1:i64 userId, 2:i32 pageSize, 3:i64 lastQueryId) throws (1:ThriftException ex)

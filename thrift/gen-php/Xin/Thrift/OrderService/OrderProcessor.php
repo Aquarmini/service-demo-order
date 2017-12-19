@@ -88,7 +88,7 @@ class OrderProcessor {
     }
     $result = new \Xin\Thrift\OrderService\Order_addGoodsToCart_result();
     try {
-      $result->success = $this->handler_->addGoodsToCart($args->userId, $args->goodsId);
+      $result->success = $this->handler_->addGoodsToCart($args->userId, $args->goodsId, $args->shopId, $args->num, $args->unitFee);
     } catch (\Xin\Thrift\OrderService\ThriftException $ex) {
       $result->ex = $ex;
     }

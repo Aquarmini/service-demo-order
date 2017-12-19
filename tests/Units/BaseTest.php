@@ -15,4 +15,8 @@ abstract class BaseTest extends UnitTestCase
     public $userId = 11521;
 
     public $goodsId = 110536;
+
+    public $shopId = 292;
+
+    public $fee = 1;
 }

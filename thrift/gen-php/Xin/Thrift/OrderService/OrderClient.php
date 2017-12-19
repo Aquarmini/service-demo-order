@@ -80,17 +80,20 @@ class OrderClient implements \Xin\Thrift\OrderService\OrderIf {
     throw new \Exception("version failed: unknown result");
   }
 
-  public function addGoodsToCart($userId, $goodsId)
+  public function addGoodsToCart($userId, $goodsId, $shopId, $num, $unitFee)
   {
-    $this->send_addGoodsToCart($userId, $goodsId);
+    $this->send_addGoodsToCart($userId, $goodsId, $shopId, $num, $unitFee);
     return $this->recv_addGoodsToCart();
   }
 
-  public function send_addGoodsToCart($userId, $goodsId)
+  public function send_addGoodsToCart($userId, $goodsId, $shopId, $num, $unitFee)
   {
     $args = new \Xin\Thrift\OrderService\Order_addGoodsToCart_args();
     $args->userId = $userId;
     $args->goodsId = $goodsId;
+    $args->shopId = $shopId;
+    $args->num = $num;
+    $args->unitFee = $unitFee;
     $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {

@@ -35,9 +35,9 @@ class OrderHandler extends Handler implements OrderIf
      * @param int $goodsId 商品ID
      * @return bool
      */
-    public function addGoodsToCart($userId, $goodsId)
+    public function addGoodsToCart($userId, $goodsId, $shopId, $num, $unitFee)
     {
-        $result = Cart::getInstance()->add($userId, $goodsId);
+        $result = Cart::getInstance()->add($userId, $goodsId, $shopId, $num, $unitFee);
         return $result;
     }
 

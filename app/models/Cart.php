@@ -24,6 +24,13 @@ class Cart extends Model
     /**
      *
      * @var integer
+     * @Column(type="integer", length=20, nullable=false)
+     */
+    public $shop_id;
+
+    /**
+     *
+     * @var integer
      * @Column(type="integer", length=20, nullable=true)
      */
     public $order_id;
@@ -34,6 +41,20 @@ class Cart extends Model
      * @Column(type="integer", length=20, nullable=false)
      */
     public $goods_id;
+
+    /**
+     *
+     * @var integer
+     * @Column(type="integer", length=10, nullable=false)
+     */
+    public $unit_fee;
+
+    /**
+     *
+     * @var integer
+     * @Column(type="integer", length=10, nullable=false)
+     */
+    public $num;
 
     /**
      *

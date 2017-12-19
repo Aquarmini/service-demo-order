@@ -26,4 +26,9 @@ class ErrorCode extends Enum
      * @Message('模型的getSchema方法必须被重写')
      */
     public static $ENUM_MODEL_SCHEMA_MUST_REWRITE = 402;
+
+    /**
+     * @Message('订单下单报错，非法的购物车ID')
+     */
+    public static $ENUM_ORDER_PLACE_INVALID_CART_ID = 1001;
 }

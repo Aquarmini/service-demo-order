@@ -25,7 +25,7 @@ class Cart extends Injectable
      * @param $goodsId
      * @return bool
      */
-    public function add($userId, $goodsId)
+    public function add($userId, $goodsId, $shopId, $num, $unitFee)
     {
         $cart = CartModel::getInstance([
             'user_id' => $userId
@@ -33,6 +33,9 @@ class Cart extends Injectable
 
         $cart->user_id = $userId;
         $cart->goods_id = $goodsId;
+        $cart->shop_id = $shopId;
+        $cart->num = $num;
+        $cart->unit_fee = $unitFee;
 
         return $cart->save();
     }

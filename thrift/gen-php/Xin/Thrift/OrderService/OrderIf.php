@@ -25,10 +25,13 @@ interface OrderIf {
   /**
    * @param int $userId
    * @param int $goodsId
+   * @param int $shopId
+   * @param int $num
+   * @param int $unitFee
    * @return bool
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
-  public function addGoodsToCart($userId, $goodsId);
+  public function addGoodsToCart($userId, $goodsId, $shopId, $num, $unitFee);
   /**
    * @param int $userId
    * @param int $pageSize

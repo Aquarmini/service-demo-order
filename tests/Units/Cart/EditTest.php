@@ -18,14 +18,14 @@ class EditTest extends BaseTest
     public function testAddCartCase()
     {
         $client = OrderClient::getInstance();
-        $status = $client->addGoodsToCart($this->userId, $this->goodsId);
+        $status = $client->addGoodsToCart($this->userId, $this->goodsId, $this->shopId, 1, $this->fee);
         $this->assertTrue($status);
     }
 
     public function testListCartByUserIdCase()
     {
         $client = OrderClient::getInstance();
-        $client->addGoodsToCart($this->userId, $this->goodsId);
+        $client->addGoodsToCart($this->userId, $this->goodsId, $this->shopId, 2, $this->fee);
         $result = $client->listCartsByUserId($this->userId, 10, null);
         $this->assertTrue($result instanceof \Xin\Thrift\OrderService\Order\CartList);
         $this->assertTrue(count($result->items) > 0);

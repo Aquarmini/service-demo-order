@@ -25,14 +25,18 @@ DROP TABLE IF EXISTS `cart`;
 CREATE TABLE `cart` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
+  `shop_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '门店ID',
   `order_id` bigint(20) unsigned DEFAULT NULL COMMENT '订单ID',
   `goods_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '商品ID',
+  `unit_fee` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '商品金额',
+  `num` int(10) unsigned NOT NULL DEFAULT '1' COMMENT '商品数量',
   `is_deleted` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否被删除',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `USER_GOODS_INDEX` (`user_id`,`goods_id`,`is_deleted`),
-  KEY `USER_ORDER_INDEX` (`user_id`,`order_id`,`is_deleted`)
+  KEY `USER_ORDER_INDEX` (`user_id`,`order_id`,`is_deleted`),
+  KEY `USER_SHOP_INDEX` (`user_id`,`shop_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

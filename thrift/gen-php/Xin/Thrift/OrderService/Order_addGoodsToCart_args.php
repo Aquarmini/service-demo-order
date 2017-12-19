@@ -30,6 +30,21 @@ class Order_addGoodsToCart_args {
       'isRequired' => false,
       'type' => TType::I64,
       ),
+    3 => array(
+      'var' => 'shopId',
+      'isRequired' => false,
+      'type' => TType::I64,
+      ),
+    4 => array(
+      'var' => 'num',
+      'isRequired' => false,
+      'type' => TType::I32,
+      ),
+    5 => array(
+      'var' => 'unitFee',
+      'isRequired' => false,
+      'type' => TType::I32,
+      ),
     );
 
   /**
@@ -40,6 +55,18 @@ class Order_addGoodsToCart_args {
    * @var int
    */
   public $goodsId = null;
+  /**
+   * @var int
+   */
+  public $shopId = null;
+  /**
+   * @var int
+   */
+  public $num = null;
+  /**
+   * @var int
+   */
+  public $unitFee = null;
 
   public function __construct($vals=null) {
     if (is_array($vals)) {
@@ -48,6 +75,15 @@ class Order_addGoodsToCart_args {
       }
       if (isset($vals['goodsId'])) {
         $this->goodsId = $vals['goodsId'];
+      }
+      if (isset($vals['shopId'])) {
+        $this->shopId = $vals['shopId'];
+      }
+      if (isset($vals['num'])) {
+        $this->num = $vals['num'];
+      }
+      if (isset($vals['unitFee'])) {
+        $this->unitFee = $vals['unitFee'];
       }
     }
   }
@@ -85,6 +121,27 @@ class Order_addGoodsToCart_args {
             $xfer += $input->skip($ftype);
           }
           break;
+        case 3:
+          if ($ftype == TType::I64) {
+            $xfer += $input->readI64($this->shopId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 4:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->num);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 5:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->unitFee);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
         default:
           $xfer += $input->skip($ftype);
           break;
@@ -106,6 +163,21 @@ class Order_addGoodsToCart_args {
     if ($this->goodsId !== null) {
       $xfer += $output->writeFieldBegin('goodsId', TType::I64, 2);
       $xfer += $output->writeI64($this->goodsId);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->shopId !== null) {
+      $xfer += $output->writeFieldBegin('shopId', TType::I64, 3);
+      $xfer += $output->writeI64($this->shopId);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->num !== null) {
+      $xfer += $output->writeFieldBegin('num', TType::I32, 4);
+      $xfer += $output->writeI32($this->num);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->unitFee !== null) {
+      $xfer += $output->writeFieldBegin('unitFee', TType::I32, 5);
+      $xfer += $output->writeI32($this->unitFee);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();
