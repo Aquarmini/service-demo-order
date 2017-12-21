@@ -11,7 +11,7 @@ namespace App\Biz\OrderService;
 use App\Common\Enums\ErrorCode;
 use App\Utils\DB;
 use Phalcon\Di\Injectable;
-use Xin\Thrift\OrderService\ThriftException;
+use App\Common\ThriftException;
 use Xin\Traits\Common\InstanceTrait;
 use App\Models\Order as OrderModel;
 use App\Models\Cart as CartModel;
