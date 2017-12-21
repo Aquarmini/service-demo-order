@@ -57,8 +57,11 @@ class OrderHandler extends Handler implements OrderIf
             $item = new CartDTO([
                 'id' => $cart->id,
                 'userId' => $cart->user_id,
+                'shopId' => $cart->shop_id,
                 'orderId' => $cart->order_id,
                 'goodsId' => $cart->goods_id,
+                'unitFee' => $cart->unit_fee,
+                'num' => $cart->num,
                 'isDeleted' => $cart->is_deleted,
             ]);
             $items[] = $item;

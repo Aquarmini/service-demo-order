@@ -22,4 +22,6 @@ service Order {
 
     // 下单接口
     bool place(1:i64 userId, 2:list<i64> cartIds) throws (1:ThriftException ex)
+
+
 }

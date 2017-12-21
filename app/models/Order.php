@@ -23,13 +23,6 @@ class Order extends Model
     /**
      *
      * @var integer
-     * @Column(type="integer", length=20, nullable=false)
-     */
-    public $shop_id;
-
-    /**
-     *
-     * @var integer
      * @Column(type="integer", length=10, nullable=false)
      */
     public $total_fee;

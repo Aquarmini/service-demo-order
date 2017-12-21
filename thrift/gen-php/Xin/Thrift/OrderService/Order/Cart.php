@@ -32,16 +32,31 @@ class Cart {
       'type' => TType::I64,
       ),
     3 => array(
-      'var' => 'orderId',
+      'var' => 'shopId',
       'isRequired' => false,
       'type' => TType::I64,
       ),
     4 => array(
-      'var' => 'goodsId',
+      'var' => 'orderId',
       'isRequired' => false,
       'type' => TType::I64,
       ),
     5 => array(
+      'var' => 'goodsId',
+      'isRequired' => false,
+      'type' => TType::I64,
+      ),
+    6 => array(
+      'var' => 'unitFee',
+      'isRequired' => false,
+      'type' => TType::I32,
+      ),
+    7 => array(
+      'var' => 'num',
+      'isRequired' => false,
+      'type' => TType::I32,
+      ),
+    8 => array(
       'var' => 'isDeleted',
       'isRequired' => false,
       'type' => TType::BYTE,
@@ -59,11 +74,23 @@ class Cart {
   /**
    * @var int
    */
+  public $shopId = null;
+  /**
+   * @var int
+   */
   public $orderId = null;
   /**
    * @var int
    */
   public $goodsId = null;
+  /**
+   * @var int
+   */
+  public $unitFee = null;
+  /**
+   * @var int
+   */
+  public $num = null;
   /**
    * @var int
    */
@@ -77,11 +104,20 @@ class Cart {
       if (isset($vals['userId'])) {
         $this->userId = $vals['userId'];
       }
+      if (isset($vals['shopId'])) {
+        $this->shopId = $vals['shopId'];
+      }
       if (isset($vals['orderId'])) {
         $this->orderId = $vals['orderId'];
       }
       if (isset($vals['goodsId'])) {
         $this->goodsId = $vals['goodsId'];
+      }
+      if (isset($vals['unitFee'])) {
+        $this->unitFee = $vals['unitFee'];
+      }
+      if (isset($vals['num'])) {
+        $this->num = $vals['num'];
       }
       if (isset($vals['isDeleted'])) {
         $this->isDeleted = $vals['isDeleted'];
@@ -124,19 +160,40 @@ class Cart {
           break;
         case 3:
           if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->orderId);
+            $xfer += $input->readI64($this->shopId);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 4:
           if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->goodsId);
+            $xfer += $input->readI64($this->orderId);
           } else {
             $xfer += $input->skip($ftype);
           }
           break;
         case 5:
+          if ($ftype == TType::I64) {
+            $xfer += $input->readI64($this->goodsId);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 6:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->unitFee);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 7:
+          if ($ftype == TType::I32) {
+            $xfer += $input->readI32($this->num);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 8:
           if ($ftype == TType::BYTE) {
             $xfer += $input->readByte($this->isDeleted);
           } else {
@@ -166,18 +223,33 @@ class Cart {
       $xfer += $output->writeI64($this->userId);
       $xfer += $output->writeFieldEnd();
     }
+    if ($this->shopId !== null) {
+      $xfer += $output->writeFieldBegin('shopId', TType::I64, 3);
+      $xfer += $output->writeI64($this->shopId);
+      $xfer += $output->writeFieldEnd();
+    }
     if ($this->orderId !== null) {
-      $xfer += $output->writeFieldBegin('orderId', TType::I64, 3);
+      $xfer += $output->writeFieldBegin('orderId', TType::I64, 4);
       $xfer += $output->writeI64($this->orderId);
       $xfer += $output->writeFieldEnd();
     }
     if ($this->goodsId !== null) {
-      $xfer += $output->writeFieldBegin('goodsId', TType::I64, 4);
+      $xfer += $output->writeFieldBegin('goodsId', TType::I64, 5);
       $xfer += $output->writeI64($this->goodsId);
       $xfer += $output->writeFieldEnd();
     }
+    if ($this->unitFee !== null) {
+      $xfer += $output->writeFieldBegin('unitFee', TType::I32, 6);
+      $xfer += $output->writeI32($this->unitFee);
+      $xfer += $output->writeFieldEnd();
+    }
+    if ($this->num !== null) {
+      $xfer += $output->writeFieldBegin('num', TType::I32, 7);
+      $xfer += $output->writeI32($this->num);
+      $xfer += $output->writeFieldEnd();
+    }
     if ($this->isDeleted !== null) {
-      $xfer += $output->writeFieldBegin('isDeleted', TType::BYTE, 5);
+      $xfer += $output->writeFieldBegin('isDeleted', TType::BYTE, 8);
       $xfer += $output->writeByte($this->isDeleted);
       $xfer += $output->writeFieldEnd();
     }

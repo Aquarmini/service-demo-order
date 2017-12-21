@@ -50,7 +50,6 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `id` bigint(20) unsigned NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL COMMENT '用户ID',
-  `shop_id` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '门店ID',
   `total_fee` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '总费用 分',
   `is_deleted` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否被删除',
   `created_at` datetime DEFAULT NULL,
