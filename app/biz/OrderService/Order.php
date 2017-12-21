@@ -8,13 +8,10 @@
 // +----------------------------------------------------------------------
 namespace App\Biz\OrderService;
 
-use App\Common\CodeException;
 use App\Common\Enums\ErrorCode;
-use App\Models\Model;
 use App\Utils\DB;
-use App\Utils\Log;
 use Phalcon\Di\Injectable;
-use Xin\Thrift\MicroService\ThriftException;
+use Xin\Thrift\OrderService\ThriftException;
 use Xin\Traits\Common\InstanceTrait;
 use App\Models\Order as OrderModel;
 use App\Models\Cart as CartModel;
@@ -65,8 +62,11 @@ class Order extends Injectable
                 foreach ($carts as $cart) {
                     $cart->order_id = $orderModel->id;
                     if (false === $cart->save()) {
-                        $message = sprintf('%s的购物车%s订单ID修改失败', $userId, $cart->id);
-                        throw new \Exception($message);
+                        $message = [];
+                        foreach ($cart->getMessages() as $item) {
+                            $message[] = $item->getMessage();
+                        }
+                        throw new \Exception(implode(',', $message));
                     }
                 }
             }
@@ -75,7 +75,7 @@ class Order extends Injectable
             DB::rollback();
             throw new ThriftException([
                 'code' => ErrorCode::$ENUM_ORDER_PLACE_ERROR,
-                'message' => ErrorCode::getMessage(ErrorCode::$ENUM_ORDER_PLACE_ERROR),
+                'message' => $ex->getMessage(),
             ]);
         }
 

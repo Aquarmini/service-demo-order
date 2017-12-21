@@ -14,6 +14,8 @@ use Xin\Thrift\OrderService\Order\CartList;
 use Xin\Thrift\OrderService\OrderIf;
 use Xin\Thrift\OrderService\ThriftException;
 use Xin\Thrift\OrderService\Order\Cart as CartDTO;
+use Xin\Thrift\OrderService\Order\OrderList;
+use Xin\Thrift\OrderService\Order\Order as OrderDTO;
 
 class OrderHandler extends Handler implements OrderIf
 {
@@ -95,5 +97,21 @@ class OrderHandler extends Handler implements OrderIf
     public function place($userId, array $cartIds)
     {
         return Order::getInstance()->place($userId, $cartIds);
+    }
+
+    /**
+     * @desc   返回用户订单列表
+     * @author limx
+     * @param int $userId
+     * @param int $pageSize
+     * @param int $lastQueryId
+     * @return OrderList
+     */
+    public function listOrderByUserId($userId, $pageSize, $lastQueryId)
+    {
+        $items = [];
+        return new OrderList([
+            'items' => $items
+        ]);
     }
 }

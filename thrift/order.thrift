@@ -2,6 +2,8 @@ namespace php Xin.Thrift.OrderService
 
 include "order/cart.thrift"
 
+include "order/order.thrift"
+
 exception ThriftException {
   1: i32 code,
   2: string message
@@ -23,5 +25,6 @@ service Order {
     // 下单接口
     bool place(1:i64 userId, 2:list<i64> cartIds) throws (1:ThriftException ex)
 
-
+    // 获取用户订单列表
+    order.OrderList listOrderByUserId(1:i64 userId, 2:i32 pageSize, 3:i64 lastQueryId) throws (1:ThriftException ex)
 }

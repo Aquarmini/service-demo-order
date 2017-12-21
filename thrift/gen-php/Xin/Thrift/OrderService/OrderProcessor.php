@@ -198,4 +198,35 @@ class OrderProcessor {
       $output->getTransport()->flush();
     }
   }
+  protected function process_listOrderByUserId($seqid, $input, $output) {
+    $bin_accel = ($input instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary_after_message_begin');
+    if ($bin_accel)
+    {
+      $args = thrift_protocol_read_binary_after_message_begin($input, '\Xin\Thrift\OrderService\Order_listOrderByUserId_args', $input->isStrictRead());
+    }
+    else
+    {
+      $args = new \Xin\Thrift\OrderService\Order_listOrderByUserId_args();
+      $args->read($input);
+      $input->readMessageEnd();
+    }
+    $result = new \Xin\Thrift\OrderService\Order_listOrderByUserId_result();
+    try {
+      $result->success = $this->handler_->listOrderByUserId($args->userId, $args->pageSize, $args->lastQueryId);
+    } catch (\Xin\Thrift\OrderService\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'listOrderByUserId', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('listOrderByUserId', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
 }

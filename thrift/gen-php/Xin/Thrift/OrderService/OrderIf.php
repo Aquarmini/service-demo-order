@@ -55,6 +55,14 @@ interface OrderIf {
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
   public function place($userId, array $cartIds);
+  /**
+   * @param int $userId
+   * @param int $pageSize
+   * @param int $lastQueryId
+   * @return \Xin\Thrift\OrderService\Order\OrderList
+   * @throws \Xin\Thrift\OrderService\ThriftException
+   */
+  public function listOrderByUserId($userId, $pageSize, $lastQueryId);
 }
 
 
