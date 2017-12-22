@@ -11,6 +11,7 @@ namespace App\Thrift\Services;
 use App\Biz\CartService\Cart;
 use App\Biz\OrderService\Order;
 use Xin\Thrift\OrderService\Order\CartList;
+use Xin\Thrift\OrderService\Order\OrderInfo;
 use Xin\Thrift\OrderService\OrderIf;
 use Xin\Thrift\OrderService\ThriftException;
 use Xin\Thrift\OrderService\Order\Cart as CartDTO;
@@ -122,6 +123,38 @@ class OrderHandler extends Handler implements OrderIf
         }
         return new OrderList([
             'items' => $items
+        ]);
+    }
+
+    /**
+     * @desc   获取订单详情
+     * @author limx
+     * @param int $orderId
+     * @return OrderInfo
+     */
+    public function getOrderInfo($orderId)
+    {
+        $order = Order::getInstance()->getOrderInfo($orderId);
+        $carts = Cart::getInstance()->listByOrderId($orderId);
+        $items = [];
+        foreach ($carts as $cart) {
+            $item = new CartDTO([
+                'id' => $cart->id,
+                'userId' => $cart->user_id,
+                'shopId' => $cart->shop_id,
+                'orderId' => $cart->order_id,
+                'goodsId' => $cart->goods_id,
+                'unitFee' => $cart->unit_fee,
+                'num' => $cart->num,
+                'isDeleted' => $cart->is_deleted,
+            ]);
+            $items[] = $item;
+        }
+        return new OrderInfo([
+            'id' => $order->id,
+            'userId' => $order->user_id,
+            'totalFee' => $order->total_fee,
+            'carts' => $items,
         ]);
     }
 }

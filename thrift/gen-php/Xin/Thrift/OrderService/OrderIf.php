@@ -63,6 +63,12 @@ interface OrderIf {
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
   public function listOrderByUserId($userId, $pageSize, $lastQueryId);
+  /**
+   * @param int $orderId
+   * @return \Xin\Thrift\OrderService\Order\OrderInfo
+   * @throws \Xin\Thrift\OrderService\ThriftException
+   */
+  public function getOrderInfo($orderId);
 }
 
 

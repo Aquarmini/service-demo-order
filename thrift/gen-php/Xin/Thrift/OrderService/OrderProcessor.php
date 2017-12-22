@@ -229,4 +229,35 @@ class OrderProcessor {
       $output->getTransport()->flush();
     }
   }
+  protected function process_getOrderInfo($seqid, $input, $output) {
+    $bin_accel = ($input instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary_after_message_begin');
+    if ($bin_accel)
+    {
+      $args = thrift_protocol_read_binary_after_message_begin($input, '\Xin\Thrift\OrderService\Order_getOrderInfo_args', $input->isStrictRead());
+    }
+    else
+    {
+      $args = new \Xin\Thrift\OrderService\Order_getOrderInfo_args();
+      $args->read($input);
+      $input->readMessageEnd();
+    }
+    $result = new \Xin\Thrift\OrderService\Order_getOrderInfo_result();
+    try {
+      $result->success = $this->handler_->getOrderInfo($args->orderId);
+    } catch (\Xin\Thrift\OrderService\ThriftException $ex) {
+      $result->ex = $ex;
+    }
+    $bin_accel = ($output instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($output, 'getOrderInfo', TMessageType::REPLY, $result, $seqid, $output->isStrictWrite());
+    }
+    else
+    {
+      $output->writeMessageBegin('getOrderInfo', TMessageType::REPLY, $seqid);
+      $result->write($output);
+      $output->writeMessageEnd();
+      $output->getTransport()->flush();
+    }
+  }
 }

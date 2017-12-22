@@ -70,6 +70,27 @@ class Cart extends Injectable
     }
 
     /**
+     * @desc   某订单下面的所有商品
+     * @author limx
+     * @param $orderId
+     */
+    public function listByOrderId($orderId)
+    {
+        $cart = CartModel::getInstance([
+            'id' => $orderId
+        ]);
+
+        $condition = 'order_id = ?0 AND is_deleted = ?1';
+        $bind = [$orderId, Model::NOT_DELETED];
+
+        return $cart->find([
+            'conditions' => $condition,
+            'bind' => $bind,
+            'order' => 'id DESC',
+        ]);
+    }
+
+    /**
      * @desc   从购物车中删除商品
      * @author limx
      * @param $userId

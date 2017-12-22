@@ -361,6 +361,60 @@ class OrderClient implements \Xin\Thrift\OrderService\OrderIf {
     throw new \Exception("listOrderByUserId failed: unknown result");
   }
 
+  public function getOrderInfo($orderId)
+  {
+    $this->send_getOrderInfo($orderId);
+    return $this->recv_getOrderInfo();
+  }
+
+  public function send_getOrderInfo($orderId)
+  {
+    $args = new \Xin\Thrift\OrderService\Order_getOrderInfo_args();
+    $args->orderId = $orderId;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'getOrderInfo', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('getOrderInfo', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_getOrderInfo()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Xin\Thrift\OrderService\Order_getOrderInfo_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Xin\Thrift\OrderService\Order_getOrderInfo_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->ex !== null) {
+      throw $result->ex;
+    }
+    throw new \Exception("getOrderInfo failed: unknown result");
+  }
+
 }
 
 

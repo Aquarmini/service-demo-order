@@ -39,8 +39,12 @@ class OrderInfo {
     4 => array(
       'var' => 'carts',
       'isRequired' => false,
-      'type' => TType::STRUCT,
-      'class' => '\Xin\Thrift\OrderService\Order\CartList',
+      'type' => TType::LST,
+      'etype' => TType::STRUCT,
+      'elem' => array(
+        'type' => TType::STRUCT,
+        'class' => '\Xin\Thrift\OrderService\Order\Cart',
+        ),
       ),
     5 => array(
       'var' => 'isDeleted',
@@ -62,7 +66,7 @@ class OrderInfo {
    */
   public $totalFee = null;
   /**
-   * @var \Xin\Thrift\OrderService\Order\CartList
+   * @var \Xin\Thrift\OrderService\Order\Cart[]
    */
   public $carts = null;
   /**
@@ -131,9 +135,19 @@ class OrderInfo {
           }
           break;
         case 4:
-          if ($ftype == TType::STRUCT) {
-            $this->carts = new \Xin\Thrift\OrderService\Order\CartList();
-            $xfer += $this->carts->read($input);
+          if ($ftype == TType::LST) {
+            $this->carts = array();
+            $_size0 = 0;
+            $_etype3 = 0;
+            $xfer += $input->readListBegin($_etype3, $_size0);
+            for ($_i4 = 0; $_i4 < $_size0; ++$_i4)
+            {
+              $elem5 = null;
+              $elem5 = new \Xin\Thrift\OrderService\Order\Cart();
+              $xfer += $elem5->read($input);
+              $this->carts []= $elem5;
+            }
+            $xfer += $input->readListEnd();
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -174,11 +188,20 @@ class OrderInfo {
       $xfer += $output->writeFieldEnd();
     }
     if ($this->carts !== null) {
-      if (!is_object($this->carts)) {
+      if (!is_array($this->carts)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
       }
-      $xfer += $output->writeFieldBegin('carts', TType::STRUCT, 4);
-      $xfer += $this->carts->write($output);
+      $xfer += $output->writeFieldBegin('carts', TType::LST, 4);
+      {
+        $output->writeListBegin(TType::STRUCT, count($this->carts));
+        {
+          foreach ($this->carts as $iter6)
+          {
+            $xfer += $iter6->write($output);
+          }
+        }
+        $output->writeListEnd();
+      }
       $xfer += $output->writeFieldEnd();
     }
     if ($this->isDeleted !== null) {

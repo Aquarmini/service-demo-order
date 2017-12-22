@@ -8,19 +8,25 @@
 // +----------------------------------------------------------------------
 namespace App\Common;
 
+use App\Common\Enums\ErrorCode;
 use Xin\Phalcon\Logger\Factory;
 use Xin\Thrift\OrderService\ThriftException as BaseException;
 
 class ThriftException extends BaseException
 {
-    public function __construct($vals = null)
+    public function __construct($code = 400, $message = null)
     {
+        if (empty($message)) {
+            $message = ErrorCode::getMessage($code);
+        }
         /** @var Factory $factory */
         $factory = di('logger');
         $logger = $factory->getLogger('thrift-exception');
-        $message = 'code:' . $vals['code'] . '|message:' . $vals['message'];
-        $logger->error($message);
-        parent::__construct($vals);
+        $logger->error('code:' . $code . '|message:' . $message);
+        parent::__construct([
+            'code' => $code,
+            'message' => $message,
+        ]);
     }
 
 }

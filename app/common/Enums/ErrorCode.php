@@ -36,4 +36,9 @@ class ErrorCode extends Enum
      * @Message('订单下单失败')
      */
     public static $ENUM_ORDER_PLACE_ERROR = 1002;
+
+    /**
+     * @Message('订单不存在')
+     */
+    public static $ENUM_ORDER_IS_NOT_EXIST = 1003;
 }

@@ -40,10 +40,7 @@ class Order extends Injectable
         foreach ($cartIds as $cartId) {
             $cart = $cartModel->findFirst($cartId);
             if ($cart->user_id !== $userId) {
-                throw new ThriftException([
-                    'code' => ErrorCode::$ENUM_ORDER_PLACE_INVALID_CART_ID,
-                    'message' => ErrorCode::getMessage(ErrorCode::$ENUM_ORDER_PLACE_INVALID_CART_ID),
-                ]);
+                throw new ThriftException(ErrorCode::$ENUM_ORDER_PLACE_INVALID_CART_ID);
             }
             $carts[] = $cart;
             $totalFee += $cart->unit_fee * $cart->num;
@@ -74,10 +71,7 @@ class Order extends Injectable
             DB::commit();
         } catch (\Exception $ex) {
             DB::rollback();
-            throw new ThriftException([
-                'code' => ErrorCode::$ENUM_ORDER_PLACE_ERROR,
-                'message' => $ex->getMessage(),
-            ]);
+            throw new ThriftException(ErrorCode::$ENUM_ORDER_PLACE_ERROR, $ex->getMessage());
         }
 
         return true;
@@ -110,5 +104,26 @@ class Order extends Injectable
             'limit' => $pageSize,
             'order' => 'id DESC',
         ]);
+    }
+
+    /**
+     * @desc   订单详情
+     * @author limx
+     * @param $orderId
+     * @return OrderModel
+     * @throws ThriftException
+     */
+    public function getOrderInfo($orderId)
+    {
+        $orderModel = OrderModel::getInstance([
+            'id' => $orderId
+        ]);
+
+        $res = $orderModel->findFirst($orderId);
+        if (empty($res)) {
+            throw new ThriftException(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST);
+        }
+
+        return $res;
     }
 }

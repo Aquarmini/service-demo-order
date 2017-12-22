@@ -27,4 +27,7 @@ service Order {
 
     // 获取用户订单列表
     order.OrderList listOrderByUserId(1:i64 userId, 2:i32 pageSize, 3:i64 lastQueryId) throws (1:ThriftException ex)
+
+    // 获取订单详情
+    order.OrderInfo getOrderInfo(1:i64 orderId) throws (1:ThriftException ex)
 }
