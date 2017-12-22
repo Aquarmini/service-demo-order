@@ -53,7 +53,7 @@ class Cart extends Injectable
         $cart = CartModel::getInstance([
             'user_id' => $userId
         ]);
-        Log::info($cart->getSchema());
+
         $condition = 'user_id = ?0 AND order_id IS NULL AND is_deleted = ?1';
         $bind = [$userId, Model::NOT_DELETED];
         if (isset($lastQueryId)) {

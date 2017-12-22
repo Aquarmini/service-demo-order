@@ -9,6 +9,7 @@
 namespace App\Biz\OrderService;
 
 use App\Common\Enums\ErrorCode;
+use App\Models\Model;
 use App\Utils\DB;
 use Phalcon\Di\Injectable;
 use App\Common\ThriftException;
@@ -80,5 +81,34 @@ class Order extends Injectable
         }
 
         return true;
+    }
+
+    /**
+     * @desc   返回用户订单列表
+     * @author limx
+     * @param      $userId
+     * @param      $pageSize
+     * @param null $lastQueryId
+     * @return OrderModel|OrderModel[]|\Phalcon\Mvc\Model\ResultSetInterface
+     */
+    public function listOrderByUserId($userId, $pageSize, $lastQueryId = null)
+    {
+        $orderModel = OrderModel::getInstance([
+            'user_id' => $userId
+        ]);
+
+        $condition = 'user_id = ?0 AND is_deleted = ?1';
+        $bind = [$userId, Model::NOT_DELETED];
+        if (isset($lastQueryId)) {
+            $condition .= ' AND id < ?2';
+            $bind[] = $lastQueryId;
+        }
+
+        return $orderModel->find([
+            'conditions' => $condition,
+            'bind' => $bind,
+            'limit' => $pageSize,
+            'order' => 'id DESC',
+        ]);
     }
 }

@@ -109,7 +109,17 @@ class OrderHandler extends Handler implements OrderIf
      */
     public function listOrderByUserId($userId, $pageSize, $lastQueryId)
     {
+        $orders = Order::getInstance()->listOrderByUserId($userId, $pageSize, $lastQueryId);
         $items = [];
+        foreach ($orders as $order) {
+            $item = new OrderDTO([
+                'id' => $order->id,
+                'userId' => $order->user_id,
+                'totalFee' => $order->total_fee,
+                'isDeleted' => $order->is_deleted,
+            ]);
+            $items[] = $item;
+        }
         return new OrderList([
             'items' => $items
         ]);

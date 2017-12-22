@@ -28,7 +28,7 @@ class ListTest extends BaseTest
         $this->assertTrue($client->place($this->userId, $cartIds));
         $result = $client->listOrderByUserId($this->userId, 10, null);
         $this->assertTrue($result instanceof \Xin\Thrift\OrderService\Order\OrderList);
-        // $this->assertTrue(count($result->items) > 0);
-        // $this->assertTrue($result->items[0] instanceof \Xin\Thrift\OrderService\Order\Order);
+        $this->assertTrue(count($result->items) > 0);
+        $this->assertTrue($result->items[0] instanceof \Xin\Thrift\OrderService\Order\Order);
     }
 }
