@@ -50,6 +50,5 @@ class InfoTest extends BaseTest
             $this->assertEquals(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST, $ex->getCode());
             $this->assertEquals(ErrorCode::getMessage(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST), $ex->getMessage());
         }
-        // $this->assertTrue($info instanceof \Xin\Thrift\OrderService\Order\OrderInfo);
     }
 }
