@@ -121,7 +121,10 @@ class Order extends Injectable
             'id' => $orderId
         ]);
 
-        $res = $orderModel->findFirst($orderId);
+        $res = $orderModel->findFirst([
+            'conditions' => 'id = ?0 AND is_deleted = ?1',
+            'bind' => [$orderId, Model::NOT_DELETED],
+        ]);
         if (empty($res)) {
             throw new ThriftException(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST);
         }
@@ -142,7 +145,10 @@ class Order extends Injectable
             'id' => $orderId
         ]);
 
-        $order = $orderModel->findFirst($orderId);
+        $order = $orderModel->findFirst([
+            'conditions' => 'id = ?0 AND is_deleted = ?1',
+            'bind' => [$orderId, Model::NOT_DELETED],
+        ]);
         if (empty($order)) {
             throw new ThriftException(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST);
         }
