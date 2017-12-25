@@ -157,4 +157,15 @@ class OrderHandler extends Handler implements OrderIf
             'carts' => $items,
         ]);
     }
+
+    /**
+     * @desc   支付成功修改订单状态
+     * @author limx
+     * @param int $orderId
+     * @return bool
+     */
+    public function paySuccess($orderId)
+    {
+        return Order::getInstance()->paySuccess($orderId);
+    }
 }

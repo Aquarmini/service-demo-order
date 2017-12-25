@@ -13,7 +13,7 @@ use Phalcon\DI\FactoryDefault;
 use Phalcon\Config;
 use Phalcon\Events\Manager as EventsManager;
 use App\Core\Event\DbListener;
-use App\Common\Enums\App;
+use App\Common\Enums\AppCode;
 use PDO;
 
 class Db implements ServiceProviderInterface

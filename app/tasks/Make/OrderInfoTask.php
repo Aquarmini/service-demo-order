@@ -2,7 +2,7 @@
 
 namespace App\Tasks\Make;
 
-use App\Common\Enums\App;
+use App\Common\Enums\AppCode;
 use App\Tasks\Task;
 use Xin\Cli\Color;
 use Xin\Support\File;
@@ -16,7 +16,7 @@ class OrderInfoTask extends Task
         for ($i = 0; $i < 8; $i++) {
             $dir = 'OrderInfo';
             $class = 'Model' . $i;
-            $schema = sprintf(App::DB_ORDER_SUFFIX, $i);
+            $schema = sprintf(AppCode::DB_ORDER_SUFFIX, $i);
             $result = str_replace('%CLASS%', $class, $template);
             $result = str_replace('%SCHEMA%', $schema, $result);
             $path = APP_PATH . '/models/' . $dir;

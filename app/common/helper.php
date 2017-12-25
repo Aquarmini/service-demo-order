@@ -7,7 +7,7 @@
 // | Author: limx <715557344@qq.com> <https://github.com/limingxinleo>
 // +----------------------------------------------------------------------
 use App\Common\OrderClient;
-use App\Common\Enums\App as AppEnum;
+use App\Common\Enums\AppCode;
 
 if (!function_exists('get_schema')) {
     /**
@@ -20,7 +20,7 @@ if (!function_exists('get_schema')) {
     function get_schema($id = null, $userId = null)
     {
         $id = get_schema_id($id, $userId);
-        return sprintf(AppEnum::DB_ORDER_SUFFIX, $id);
+        return sprintf(AppCode::DB_ORDER_SUFFIX, $id);
     }
 }
 

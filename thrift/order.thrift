@@ -31,4 +31,7 @@ service Order {
     // 获取订单详情
     order.OrderInfo getOrderInfo(1:i64 orderId) throws (1:ThriftException ex)
 
+    // 支付成功修改订单状态
+    bool paySuccess(1:i64 orderId) throws (1:ThriftException ex)
+
 }

@@ -9,6 +9,7 @@
 namespace App\Biz\OrderService;
 
 use App\Common\Enums\ErrorCode;
+use App\Common\Enums\OrderCode;
 use App\Models\Model;
 use App\Utils\DB;
 use Phalcon\Di\Injectable;
@@ -126,5 +127,32 @@ class Order extends Injectable
         }
 
         return $res;
+    }
+
+    /**
+     * @desc   订单支付完成修改订单状态
+     * @author limx
+     * @param $orderId
+     * @return bool
+     * @throws ThriftException
+     */
+    public function paySuccess($orderId)
+    {
+        $orderModel = OrderModel::getInstance([
+            'id' => $orderId
+        ]);
+
+        $order = $orderModel->findFirst($orderId);
+        if (empty($order)) {
+            throw new ThriftException(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST);
+        }
+
+        if ($order->status === OrderCode::STATUS_PAID) {
+            throw new ThriftException(ErrorCode::$ENUM_ORDER_ONLY_PAYID_ONCE);
+        }
+
+        $order->status = OrderCode::STATUS_PAID;
+
+        return $order->save();
     }
 }

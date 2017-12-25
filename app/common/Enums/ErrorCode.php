@@ -41,4 +41,9 @@ class ErrorCode extends Enum
      * @Message('订单不存在')
      */
     public static $ENUM_ORDER_IS_NOT_EXIST = 1003;
+
+    /**
+     * @Message('订单不允许重复支付')
+     */
+    public static $ENUM_ORDER_ONLY_PAYID_ONCE = 1004;
 }

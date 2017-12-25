@@ -8,7 +8,9 @@
 // +----------------------------------------------------------------------
 namespace App\Common\Enums;
 
-class App
+class OrderCode
 {
-    const DB_ORDER_SUFFIX = 'order_%d';
+    // 订单状态
+    const STATUS_UNPAY = 0; // 未支付
+    const STATUS_PAID = 1; // 已支付
 }

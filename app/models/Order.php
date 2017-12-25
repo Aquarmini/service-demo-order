@@ -32,6 +32,13 @@ class Order extends Model
      * @var integer
      * @Column(type="integer", length=4, nullable=false)
      */
+    public $status;
+
+    /**
+     *
+     * @var integer
+     * @Column(type="integer", length=4, nullable=false)
+     */
     public $is_deleted;
 
     /**

@@ -8,14 +8,14 @@
 // +----------------------------------------------------------------------
 namespace Tests\Units\Cart;
 
-use App\Models\Cart;
-use App\Models\Model;
+use App\Common\Enums\ErrorCode;
+use App\Common\Enums\OrderCode;
 use App\Thrift\Clients\OrderClient;
 use Tests\Units\BaseTest;
 
-class PlaceTest extends BaseTest
+class PaySuccessTest extends BaseTest
 {
-    public function testPlace()
+    public function testPaySuccess()
     {
         $client = OrderClient::getInstance();
         $status = $client->addGoodsToCart($this->userId, $this->goodsId, $this->shopId, 2, $this->fee);
@@ -27,5 +27,15 @@ class PlaceTest extends BaseTest
         }
         $order_id = $client->place($this->userId, $cartIds);
         $this->assertTrue($order_id > 0);
+
+        $this->assertTrue($client->paySuccess($order_id));
+
+        try {
+            $client->paySuccess($order_id);
+        } catch (\Exception $ex) {
+            $this->assertEquals(ErrorCode::$ENUM_ORDER_ONLY_PAYID_ONCE, $ex->getCode());
+            $message = ErrorCode::getMessage(ErrorCode::$ENUM_ORDER_ONLY_PAYID_ONCE);
+            $this->assertEquals($message, $ex->getMessage());
+        }
     }
 }
