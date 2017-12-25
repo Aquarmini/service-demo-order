@@ -34,4 +34,7 @@ service Order {
     // 支付成功修改订单状态
     bool paySuccess(1:i64 orderId) throws (1:ThriftException ex)
 
+    // 删除订单
+    bool delOrder(1:i64 orderId) throws (1:ThriftException ex)
+
 }

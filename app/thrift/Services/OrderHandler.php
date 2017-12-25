@@ -168,4 +168,15 @@ class OrderHandler extends Handler implements OrderIf
     {
         return Order::getInstance()->paySuccess($orderId);
     }
+
+    /**
+     * @desc   阐述未支付订单
+     * @author limx
+     * @param int $orderId
+     * @return bool
+     */
+    public function delOrder($orderId)
+    {
+        return Order::getInstance()->delOrder($orderId);
+    }
 }

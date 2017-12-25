@@ -75,6 +75,12 @@ interface OrderIf {
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
   public function paySuccess($orderId);
+  /**
+   * @param int $orderId
+   * @return bool
+   * @throws \Xin\Thrift\OrderService\ThriftException
+   */
+  public function delOrder($orderId);
 }
 
 

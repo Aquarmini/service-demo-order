@@ -155,4 +155,29 @@ class Order extends Injectable
 
         return $order->save();
     }
+
+    /**
+     * @desc   删除未支付订单
+     * @author limx
+     * @param $orderId
+     * @return bool
+     * @throws ThriftException
+     */
+    public function delOrder($orderId)
+    {
+        $orderModel = OrderModel::getInstance([
+            'id' => $orderId
+        ]);
+
+        $order = $orderModel->findFirst($orderId);
+        if (empty($order)) {
+            throw new ThriftException(ErrorCode::$ENUM_ORDER_IS_NOT_EXIST);
+        }
+
+        if ($order->status === OrderCode::STATUS_PAID) {
+            throw new ThriftException(ErrorCode::$ENUM_ORDER_NOT_ALLOWED_DELETE_PAYID);
+        }
+
+        return $order->delete();
+    }
 }

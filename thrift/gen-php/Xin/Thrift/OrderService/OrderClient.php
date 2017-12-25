@@ -469,6 +469,60 @@ class OrderClient implements \Xin\Thrift\OrderService\OrderIf {
     throw new \Exception("paySuccess failed: unknown result");
   }
 
+  public function delOrder($orderId)
+  {
+    $this->send_delOrder($orderId);
+    return $this->recv_delOrder();
+  }
+
+  public function send_delOrder($orderId)
+  {
+    $args = new \Xin\Thrift\OrderService\Order_delOrder_args();
+    $args->orderId = $orderId;
+    $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
+    if ($bin_accel)
+    {
+      thrift_protocol_write_binary($this->output_, 'delOrder', TMessageType::CALL, $args, $this->seqid_, $this->output_->isStrictWrite());
+    }
+    else
+    {
+      $this->output_->writeMessageBegin('delOrder', TMessageType::CALL, $this->seqid_);
+      $args->write($this->output_);
+      $this->output_->writeMessageEnd();
+      $this->output_->getTransport()->flush();
+    }
+  }
+
+  public function recv_delOrder()
+  {
+    $bin_accel = ($this->input_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_read_binary');
+    if ($bin_accel) $result = thrift_protocol_read_binary($this->input_, '\Xin\Thrift\OrderService\Order_delOrder_result', $this->input_->isStrictRead());
+    else
+    {
+      $rseqid = 0;
+      $fname = null;
+      $mtype = 0;
+
+      $this->input_->readMessageBegin($fname, $mtype, $rseqid);
+      if ($mtype == TMessageType::EXCEPTION) {
+        $x = new TApplicationException();
+        $x->read($this->input_);
+        $this->input_->readMessageEnd();
+        throw $x;
+      }
+      $result = new \Xin\Thrift\OrderService\Order_delOrder_result();
+      $result->read($this->input_);
+      $this->input_->readMessageEnd();
+    }
+    if ($result->success !== null) {
+      return $result->success;
+    }
+    if ($result->ex !== null) {
+      throw $result->ex;
+    }
+    throw new \Exception("delOrder failed: unknown result");
+  }
+
 }
 
 

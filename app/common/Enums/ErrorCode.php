@@ -46,4 +46,9 @@ class ErrorCode extends Enum
      * @Message('订单不允许重复支付')
      */
     public static $ENUM_ORDER_ONLY_PAYID_ONCE = 1004;
+
+    /**
+     * @Message('不允许删除已支付订单')
+     */
+    public static $ENUM_ORDER_NOT_ALLOWED_DELETE_PAYID = 1005;
 }
