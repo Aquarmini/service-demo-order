@@ -27,14 +27,10 @@ class InfoTest extends BaseTest
         foreach ($result->items as $item) {
             $cartIds[] = $item->id;
         }
-        $this->assertTrue($client->place($this->userId, $cartIds));
-        $result = $client->listOrderByUserId($this->userId, 10, null);
-        $this->assertTrue($result instanceof \Xin\Thrift\OrderService\Order\OrderList);
-        $this->assertTrue(count($result->items) > 0);
-        $this->assertTrue($result->items[0] instanceof \Xin\Thrift\OrderService\Order\Order);
+        $order_id = $client->place($this->userId, $cartIds);
+        $this->assertTrue($order_id > 0);
 
-        $order = $result->items[0];
-        $info = $client->getOrderInfo($order->id);
+        $info = $client->getOrderInfo($order_id);
         $this->assertTrue($info instanceof \Xin\Thrift\OrderService\Order\OrderInfo);
 
         try {

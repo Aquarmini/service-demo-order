@@ -23,7 +23,7 @@ class Order_place_result {
     0 => array(
       'var' => 'success',
       'isRequired' => false,
-      'type' => TType::BOOL,
+      'type' => TType::I64,
       ),
     1 => array(
       'var' => 'ex',
@@ -34,7 +34,7 @@ class Order_place_result {
     );
 
   /**
-   * @var bool
+   * @var int
    */
   public $success = null;
   /**
@@ -73,8 +73,8 @@ class Order_place_result {
       switch ($fid)
       {
         case 0:
-          if ($ftype == TType::BOOL) {
-            $xfer += $input->readBool($this->success);
+          if ($ftype == TType::I64) {
+            $xfer += $input->readI64($this->success);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -101,8 +101,8 @@ class Order_place_result {
     $xfer = 0;
     $xfer += $output->writeStructBegin('Order_place_result');
     if ($this->success !== null) {
-      $xfer += $output->writeFieldBegin('success', TType::BOOL, 0);
-      $xfer += $output->writeBool($this->success);
+      $xfer += $output->writeFieldBegin('success', TType::I64, 0);
+      $xfer += $output->writeI64($this->success);
       $xfer += $output->writeFieldEnd();
     }
     if ($this->ex !== null) {

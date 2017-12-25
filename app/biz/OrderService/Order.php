@@ -46,13 +46,14 @@ class Order extends Injectable
             $totalFee += $cart->unit_fee * $cart->num;
         }
 
+        $order_id = get_order_id($userId);
         DB::begin();
         try {
             $orderModel = OrderModel::getInstance([
                 'user_id' => $userId
             ]);
 
-            $orderModel->id = get_order_id($userId);
+            $orderModel->id = $order_id;
             $orderModel->user_id = $userId;
             $orderModel->total_fee = $totalFee;
             if ($orderModel->save()) {
@@ -74,7 +75,7 @@ class Order extends Injectable
             throw new ThriftException(ErrorCode::$ENUM_ORDER_PLACE_ERROR, $ex->getMessage());
         }
 
-        return true;
+        return $order_id;
     }
 
     /**

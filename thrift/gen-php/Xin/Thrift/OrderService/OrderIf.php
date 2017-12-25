@@ -51,7 +51,7 @@ interface OrderIf {
   /**
    * @param int $userId
    * @param int[] $cartIds
-   * @return bool
+   * @return int
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
   public function place($userId, array $cartIds);
