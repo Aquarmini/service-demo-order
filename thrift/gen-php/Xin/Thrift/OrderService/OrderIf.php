@@ -49,12 +49,11 @@ interface OrderIf {
    */
   public function delGoodsFromCart($userId, $goodsId, $id);
   /**
-   * @param int $userId
-   * @param int[] $cartIds
+   * @param \Xin\Thrift\OrderService\Order\PlaceInput $input
    * @return int
    * @throws \Xin\Thrift\OrderService\ThriftException
    */
-  public function place($userId, array $cartIds);
+  public function place(\Xin\Thrift\OrderService\Order\PlaceInput $input);
   /**
    * @param int $userId
    * @param int $pageSize

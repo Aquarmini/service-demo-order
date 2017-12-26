@@ -21,37 +21,22 @@ class Order_place_args {
 
   static $_TSPEC = array(
     1 => array(
-      'var' => 'userId',
+      'var' => 'input',
       'isRequired' => false,
-      'type' => TType::I64,
-      ),
-    2 => array(
-      'var' => 'cartIds',
-      'isRequired' => false,
-      'type' => TType::LST,
-      'etype' => TType::I64,
-      'elem' => array(
-        'type' => TType::I64,
-        ),
+      'type' => TType::STRUCT,
+      'class' => '\Xin\Thrift\OrderService\Order\PlaceInput',
       ),
     );
 
   /**
-   * @var int
+   * @var \Xin\Thrift\OrderService\Order\PlaceInput
    */
-  public $userId = null;
-  /**
-   * @var int[]
-   */
-  public $cartIds = null;
+  public $input = null;
 
   public function __construct($vals=null) {
     if (is_array($vals)) {
-      if (isset($vals['userId'])) {
-        $this->userId = $vals['userId'];
-      }
-      if (isset($vals['cartIds'])) {
-        $this->cartIds = $vals['cartIds'];
+      if (isset($vals['input'])) {
+        $this->input = $vals['input'];
       }
     }
   }
@@ -76,25 +61,9 @@ class Order_place_args {
       switch ($fid)
       {
         case 1:
-          if ($ftype == TType::I64) {
-            $xfer += $input->readI64($this->userId);
-          } else {
-            $xfer += $input->skip($ftype);
-          }
-          break;
-        case 2:
-          if ($ftype == TType::LST) {
-            $this->cartIds = array();
-            $_size0 = 0;
-            $_etype3 = 0;
-            $xfer += $input->readListBegin($_etype3, $_size0);
-            for ($_i4 = 0; $_i4 < $_size0; ++$_i4)
-            {
-              $elem5 = null;
-              $xfer += $input->readI64($elem5);
-              $this->cartIds []= $elem5;
-            }
-            $xfer += $input->readListEnd();
+          if ($ftype == TType::STRUCT) {
+            $this->input = new \Xin\Thrift\OrderService\Order\PlaceInput();
+            $xfer += $this->input->read($input);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -112,26 +81,12 @@ class Order_place_args {
   public function write($output) {
     $xfer = 0;
     $xfer += $output->writeStructBegin('Order_place_args');
-    if ($this->userId !== null) {
-      $xfer += $output->writeFieldBegin('userId', TType::I64, 1);
-      $xfer += $output->writeI64($this->userId);
-      $xfer += $output->writeFieldEnd();
-    }
-    if ($this->cartIds !== null) {
-      if (!is_array($this->cartIds)) {
+    if ($this->input !== null) {
+      if (!is_object($this->input)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
       }
-      $xfer += $output->writeFieldBegin('cartIds', TType::LST, 2);
-      {
-        $output->writeListBegin(TType::I64, count($this->cartIds));
-        {
-          foreach ($this->cartIds as $iter6)
-          {
-            $xfer += $output->writeI64($iter6);
-          }
-        }
-        $output->writeListEnd();
-      }
+      $xfer += $output->writeFieldBegin('input', TType::STRUCT, 1);
+      $xfer += $this->input->write($output);
       $xfer += $output->writeFieldEnd();
     }
     $xfer += $output->writeFieldStop();

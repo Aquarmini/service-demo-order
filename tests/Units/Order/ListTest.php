@@ -12,6 +12,7 @@ use App\Models\Cart;
 use App\Models\Model;
 use App\Thrift\Clients\OrderClient;
 use Tests\Units\BaseTest;
+use Xin\Thrift\OrderService\Order\PlaceInput;
 
 class ListTest extends BaseTest
 {
@@ -25,7 +26,11 @@ class ListTest extends BaseTest
         foreach ($result->items as $item) {
             $cartIds[] = $item->id;
         }
-        $order_id = $client->place($this->userId, $cartIds);
+        $input = new PlaceInput([
+            'userId' => $this->userId,
+            'cartIds' => $cartIds,
+        ]);
+        $order_id = $client->place($input);
         $this->assertTrue($order_id > 0);
         $result = $client->listOrderByUserId($this->userId, 10, null);
         $this->assertTrue($result instanceof \Xin\Thrift\OrderService\Order\OrderList);

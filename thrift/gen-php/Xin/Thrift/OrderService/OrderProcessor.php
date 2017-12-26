@@ -181,7 +181,7 @@ class OrderProcessor {
     }
     $result = new \Xin\Thrift\OrderService\Order_place_result();
     try {
-      $result->success = $this->handler_->place($args->userId, $args->cartIds);
+      $result->success = $this->handler_->place($args->input);
     } catch (\Xin\Thrift\OrderService\ThriftException $ex) {
       $result->ex = $ex;
     }

@@ -12,6 +12,7 @@ use App\Common\Enums\ErrorCode;
 use App\Common\Enums\OrderCode;
 use App\Thrift\Clients\OrderClient;
 use Tests\Units\BaseTest;
+use Xin\Thrift\OrderService\Order\PlaceInput;
 
 class PaySuccessTest extends BaseTest
 {
@@ -25,7 +26,11 @@ class PaySuccessTest extends BaseTest
         foreach ($result->items as $item) {
             $cartIds[] = $item->id;
         }
-        $order_id = $client->place($this->userId, $cartIds);
+        $input = new PlaceInput([
+            'userId' => $this->userId,
+            'cartIds' => $cartIds,
+        ]);
+        $order_id = $client->place($input);
         $this->assertTrue($order_id > 0);
 
         $this->assertTrue($client->paySuccess($order_id));

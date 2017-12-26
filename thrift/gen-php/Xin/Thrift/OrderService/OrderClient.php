@@ -250,17 +250,16 @@ class OrderClient implements \Xin\Thrift\OrderService\OrderIf {
     throw new \Exception("delGoodsFromCart failed: unknown result");
   }
 
-  public function place($userId, array $cartIds)
+  public function place(\Xin\Thrift\OrderService\Order\PlaceInput $input)
   {
-    $this->send_place($userId, $cartIds);
+    $this->send_place($input);
     return $this->recv_place();
   }
 
-  public function send_place($userId, array $cartIds)
+  public function send_place(\Xin\Thrift\OrderService\Order\PlaceInput $input)
   {
     $args = new \Xin\Thrift\OrderService\Order_place_args();
-    $args->userId = $userId;
-    $args->cartIds = $cartIds;
+    $args->input = $input;
     $bin_accel = ($this->output_ instanceof TBinaryProtocolAccelerated) && function_exists('thrift_protocol_write_binary');
     if ($bin_accel)
     {

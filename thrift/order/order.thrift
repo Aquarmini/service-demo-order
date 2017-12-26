@@ -20,3 +20,9 @@ struct OrderInfo {
 struct OrderList {
     1: list<Order> items
 }
+
+struct PlaceInput {
+    1: i64 userId,
+    2: list<i64> cartIds,
+    3: string remark,
+}

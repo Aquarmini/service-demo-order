@@ -69,6 +69,7 @@ DROP TABLE IF EXISTS `order_info`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `order_info` (
   `id` bigint(20) unsigned NOT NULL,
+  `remark` varchar(1000) NOT NULL DEFAULT '' COMMENT '备注',
   `is_deleted` tinyint(4) unsigned NOT NULL DEFAULT '0' COMMENT '是否已删除',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,

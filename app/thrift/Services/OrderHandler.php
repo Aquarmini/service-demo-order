@@ -17,6 +17,7 @@ use Xin\Thrift\OrderService\ThriftException;
 use Xin\Thrift\OrderService\Order\Cart as CartDTO;
 use Xin\Thrift\OrderService\Order\OrderList;
 use Xin\Thrift\OrderService\Order\Order as OrderDTO;
+use Xin\Thrift\OrderService\Order\PlaceInput as PlaceInputDTO;
 
 class OrderHandler extends Handler implements OrderIf
 {
@@ -91,13 +92,15 @@ class OrderHandler extends Handler implements OrderIf
     /**
      * @desc   下单接口
      * @author limx
-     * @param int   $userId
-     * @param array $cartIds
+     * @param PlaceInputDTO $input
      * @return bool
      */
-    public function place($userId, array $cartIds)
+    public function place(PlaceInputDTO $input)
     {
-        return Order::getInstance()->place($userId, $cartIds);
+        return Order::getInstance()->place(
+            $input->userId,
+            $input->cartIds
+        );
     }
 
     /**
