@@ -29,7 +29,7 @@ class PlaceTest extends BaseTest
         $input = new PlaceInput([
             'userId' => $this->userId,
             'cartIds' => $cartIds,
-            'remark' => '我是备注',
+            'remark' => 'hi Agnes, I Love You!',
         ]);
         $order_id = $client->place($input);
         $this->assertTrue($order_id > 0);
