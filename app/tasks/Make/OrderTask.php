@@ -34,6 +34,7 @@ class OrderTask extends Task
 namespace App\Models\Order;
 
 use App\Models\Order as OrderBase;
+use App\Models\OrderInfo\%CLASS% as OrderInfo;
 
 class %CLASS% extends OrderBase {
     
@@ -41,6 +42,13 @@ class %CLASS% extends OrderBase {
     {
         return '%SCHEMA%';
     }
+    
+    public function initialize()
+    {
+        \$this->hasOne('id', OrderInfo::class, 'id');
+        parent::initialize();
+    }
+    
 }";
     }
 

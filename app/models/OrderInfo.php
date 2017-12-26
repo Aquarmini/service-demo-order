@@ -15,6 +15,13 @@ class OrderInfo extends Model
 
     /**
      *
+     * @var string
+     * @Column(type="string", length=1000, nullable=false)
+     */
+    public $remark;
+
+    /**
+     *
      * @var integer
      * @Column(type="integer", length=4, nullable=false)
      */

@@ -99,7 +99,8 @@ class OrderHandler extends Handler implements OrderIf
     {
         return Order::getInstance()->place(
             $input->userId,
-            $input->cartIds
+            $input->cartIds,
+            $input->remark
         );
     }
 

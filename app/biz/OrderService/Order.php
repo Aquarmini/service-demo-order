@@ -11,6 +11,7 @@ namespace App\Biz\OrderService;
 use App\Common\Enums\ErrorCode;
 use App\Common\Enums\OrderCode;
 use App\Models\Model;
+use App\Models\OrderInfo as OrderInfoModel;
 use App\Utils\DB;
 use Phalcon\Di\Injectable;
 use App\Common\ThriftException;
@@ -29,7 +30,7 @@ class Order extends Injectable
      * @param array $cartIds
      * @return bool
      */
-    public function place($userId, array $cartIds)
+    public function place($userId, array $cartIds, $remark = '')
     {
         // 判断cartId是否与userId匹配
         $cartModel = CartModel::getInstance([
@@ -70,6 +71,16 @@ class Order extends Injectable
                     }
                 }
             }
+
+            $orderInfoModel = OrderInfoModel::getInstance([
+                'id' => $order_id,
+            ]);
+            $orderInfoModel->id = $order_id;
+            $orderInfoModel->remark = $remark;
+            if (!$orderInfoModel->save()) {
+                throw new \Exception('订单详情保存失败');
+            }
+
             DB::commit();
         } catch (\Exception $ex) {
             DB::rollback();
