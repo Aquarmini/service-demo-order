@@ -47,6 +47,11 @@ class OrderInfo {
         ),
       ),
     5 => array(
+      'var' => 'remark',
+      'isRequired' => false,
+      'type' => TType::STRING,
+      ),
+    6 => array(
       'var' => 'isDeleted',
       'isRequired' => false,
       'type' => TType::BYTE,
@@ -70,6 +75,10 @@ class OrderInfo {
    */
   public $carts = null;
   /**
+   * @var string
+   */
+  public $remark = null;
+  /**
    * @var int
    */
   public $isDeleted = null;
@@ -87,6 +96,9 @@ class OrderInfo {
       }
       if (isset($vals['carts'])) {
         $this->carts = $vals['carts'];
+      }
+      if (isset($vals['remark'])) {
+        $this->remark = $vals['remark'];
       }
       if (isset($vals['isDeleted'])) {
         $this->isDeleted = $vals['isDeleted'];
@@ -153,6 +165,13 @@ class OrderInfo {
           }
           break;
         case 5:
+          if ($ftype == TType::STRING) {
+            $xfer += $input->readString($this->remark);
+          } else {
+            $xfer += $input->skip($ftype);
+          }
+          break;
+        case 6:
           if ($ftype == TType::BYTE) {
             $xfer += $input->readByte($this->isDeleted);
           } else {
@@ -204,8 +223,13 @@ class OrderInfo {
       }
       $xfer += $output->writeFieldEnd();
     }
+    if ($this->remark !== null) {
+      $xfer += $output->writeFieldBegin('remark', TType::STRING, 5);
+      $xfer += $output->writeString($this->remark);
+      $xfer += $output->writeFieldEnd();
+    }
     if ($this->isDeleted !== null) {
-      $xfer += $output->writeFieldBegin('isDeleted', TType::BYTE, 5);
+      $xfer += $output->writeFieldBegin('isDeleted', TType::BYTE, 6);
       $xfer += $output->writeByte($this->isDeleted);
       $xfer += $output->writeFieldEnd();
     }

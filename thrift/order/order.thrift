@@ -14,7 +14,8 @@ struct OrderInfo {
     2: i64 userId,
     3: i32 totalFee,
     4: list<cart.Cart> carts,
-    5: i8 isDeleted
+    5: string remark,
+    6: i8 isDeleted
 }
 
 struct OrderList {

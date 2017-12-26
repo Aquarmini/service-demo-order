@@ -159,6 +159,7 @@ class OrderHandler extends Handler implements OrderIf
             'userId' => $order->user_id,
             'totalFee' => $order->total_fee,
             'carts' => $items,
+            'remark' => $order->info->remark
         ]);
     }
 

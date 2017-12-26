@@ -31,12 +31,14 @@ class InfoTest extends BaseTest
         $input = new PlaceInput([
             'userId' => $this->userId,
             'cartIds' => $cartIds,
+            'remark' => 'hi, please reply me one minute later!',
         ]);
         $order_id = $client->place($input);
         $this->assertTrue($order_id > 0);
 
         $info = $client->getOrderInfo($order_id);
         $this->assertTrue($info instanceof \Xin\Thrift\OrderService\Order\OrderInfo);
+        $this->assertEquals('hi, please reply me one minute later!', $info->remark);
 
         try {
             $info = $client->getOrderInfo(12346578909);

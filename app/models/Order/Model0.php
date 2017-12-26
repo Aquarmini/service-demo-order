@@ -13,7 +13,7 @@ class Model0 extends OrderBase {
     
     public function initialize()
     {
-        $this->hasOne('id', OrderInfo::class, 'id');
+        $this->hasOne('id', OrderInfo::class, 'id', ['alias' => 'info', 'reusable' => true]);
         parent::initialize();
     }
     
