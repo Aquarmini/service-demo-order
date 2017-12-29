@@ -82,4 +82,3 @@ class ServiceTask extends Socket
         return $config->toArray();
     }
 }
-
