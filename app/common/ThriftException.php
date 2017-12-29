@@ -28,5 +28,4 @@ class ThriftException extends BaseException
             'message' => $message,
         ]);
     }
-
 }

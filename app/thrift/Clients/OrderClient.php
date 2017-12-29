@@ -29,7 +29,4 @@ class OrderClient extends Client
     {
         return parent::getInstance($config);
     }
-
-
 }
-

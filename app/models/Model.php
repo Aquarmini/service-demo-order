@@ -49,7 +49,6 @@ abstract class Model extends \Phalcon\Mvc\Model
                 ]
             )
         );
-
     }
 
     /**

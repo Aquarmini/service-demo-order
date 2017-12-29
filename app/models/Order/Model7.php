@@ -4,8 +4,8 @@ namespace App\Models\Order;
 use App\Models\Order as OrderBase;
 use App\Models\OrderInfo\Model7 as OrderInfo;
 
-class Model7 extends OrderBase {
-    
+class Model7 extends OrderBase
+{
     public function getSchema()
     {
         return 'order_7';
@@ -16,5 +16,4 @@ class Model7 extends OrderBase {
         $this->hasOne('id', OrderInfo::class, 'id', ['alias' => 'info', 'reusable' => true]);
         parent::initialize();
     }
-    
 }

@@ -9,7 +9,6 @@ use Xin\Support\File;
 
 class OrderTask extends Task
 {
-
     public function mainAction()
     {
         $template = $this->getTemplate();
@@ -51,6 +50,4 @@ class %CLASS% extends OrderBase {
     
 }";
     }
-
 }
-

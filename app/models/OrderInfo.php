@@ -81,5 +81,4 @@ class OrderInfo extends Model
     {
         return 'order_info';
     }
-
 }

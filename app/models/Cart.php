@@ -117,5 +117,4 @@ class Cart extends Model
     {
         return 'cart';
     }
-
 }

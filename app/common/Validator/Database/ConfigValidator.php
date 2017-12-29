@@ -21,7 +21,6 @@ class ConfigValidator extends Validator
                 [
                     "message" => "There must be only an user or admin set",
                     "callback" => function ($data) {
-
                         if (empty($data['user_id']) && empty($data['id'])) {
                             return false;
                         }
@@ -32,5 +31,4 @@ class ConfigValidator extends Validator
             )
         );
     }
-
 }

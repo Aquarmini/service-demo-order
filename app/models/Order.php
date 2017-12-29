@@ -95,5 +95,4 @@ class Order extends Model
     {
         return 'order';
     }
-
 }
