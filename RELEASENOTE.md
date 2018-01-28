@@ -2,15 +2,26 @@
 
 ## [Unreleased]
 ### Checked
-- [x] php单元测试
+- [ ] php单元测试
 
 ### Added
+
+### Changed
+
+### Fixed
+
+### Deleted
+
+## [2.2.5]
+### Checked
+- [x] php单元测试
 
 ### Changed
 * 修改单元测试，增加命名空间Tests
 * 修改代码规范
 * 修改vendor/autoload的加载位置
 * 默认phalcon-dev脚本加载app/bootstrap.php
+* 修改中间件默认执行顺序
 
 ### Fixed
 * 修改Socket基类的配置，避免覆盖Injectable的config服务
@@ -19,6 +30,7 @@
 * 删除多余注释
 * 删除updateOnly，使用useDynamicUpdate代替
 * 移除单元测试
+* 删除App自定义配置服务
 
 ## [2.1.5]
 ### Checked
